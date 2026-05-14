@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axiom Strat Cap — VSL Automation · Abdullah Mustafa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --ink:#F0EDE6;
+  --ink-dim:rgba(240,237,230,0.44);
+  --ink-faint:rgba(240,237,230,0.11);
+  --bg:#0A0906;
+  --bg2:#121008;
+  --bg3:#18160C;
+  --acc:#C9A84C;
+  --acc-dim:rgba(201,168,76,0.13);
+  --acc-border:rgba(201,168,76,0.32);
+  --grn:#4CAF82;
+  --grn-dim:rgba(76,175,130,0.11);
+  --red:#E85B5B;
+  --red-dim:rgba(232,91,91,0.11);
+  --amb:#E8623A;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+  --max:1120px;
+  --g:52px;
+}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.75;font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--acc);color:#fff}
+
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--g)}
+
+/* HERO */
+.hero{padding:88px 0 108px;border-bottom:.5px solid var(--ink-faint);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-260px;right:-200px;width:680px;height:680px;background:radial-gradient(circle at center,rgba(201,168,76,0.06) 0%,transparent 68%);pointer-events:none}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--acc);text-transform:uppercase;margin-bottom:38px;display:flex;align-items:center;gap:14px;opacity:0;animation:fu .7s .05s cubic-bezier(.16,1,.3,1) forwards}
+.eyebrow::before{content:'';display:block;width:22px;height:1px;background:var(--acc);flex-shrink:0}
+.hero-title{font-family:var(--serif);font-weight:900;font-size:clamp(80px,13vw,150px);line-height:.9;letter-spacing:-.025em;margin-bottom:28px;opacity:0;animation:fu .8s .15s cubic-bezier(.16,1,.3,1) forwards}
+.hero-title em{font-style:italic;color:var(--acc)}
+.hero-sub{font-family:var(--serif);font-size:clamp(18px,2.3vw,25px);font-weight:300;font-style:italic;color:var(--ink-dim);max-width:520px;margin-bottom:60px;line-height:1.45;opacity:0;animation:fu .8s .25s cubic-bezier(.16,1,.3,1) forwards}
+.hero-meta{display:flex;gap:36px;flex-wrap:wrap;align-items:center;opacity:0;animation:fu .8s .35s cubic-bezier(.16,1,.3,1) forwards}
+.m-item{display:flex;flex-direction:column;gap:5px}
+.m-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-dim)}
+.m-val{font-size:15px;font-weight:500;color:var(--ink)}
+.m-sep{width:1px;height:38px;background:var(--ink-faint)}
+
+/* SECTIONS */
+section{padding:100px 0;border-bottom:.5px solid var(--ink-faint)}
+.s-label{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:22px;display:flex;align-items:center;gap:10px}
+.s-label span{color:var(--acc)}
+.s-title{font-family:var(--serif);font-weight:700;font-size:clamp(34px,4.5vw,54px);line-height:1.08;letter-spacing:-.02em;margin-bottom:34px}
+.s-title em{font-style:italic;color:var(--acc)}
+
+/* OVERVIEW */
+.ov-grid{display:grid;grid-template-columns:1fr 296px;gap:84px;align-items:start}
+.ov-body{font-size:17.5px;line-height:1.8;color:rgba(240,234,224,.78)}
+.ov-body p+p{margin-top:22px}
+.callout{background:var(--bg3);border:.5px solid var(--ink-faint);border-left:2px solid var(--acc);padding:28px 26px;border-radius:2px}
+.callout+.callout{margin-top:14px}
+.callout-n{font-family:var(--serif);font-size:64px;font-weight:900;line-height:1;color:var(--acc);margin-bottom:10px}
+.callout-l{font-size:13.5px;color:var(--ink-dim);line-height:1.55}
+
+/* FLOW */
+.flow-outer{margin-top:56px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.flow-svg{display:block;min-width:900px}
+
+/* research callout */
+.research-note{background:var(--bg3);border:.5px solid var(--ink-faint);border-left:2px solid rgba(240,234,224,.12);padding:22px 26px;border-radius:2px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;max-width:700px;margin-top:40px}
+.rn-step{font-family:var(--mono);font-size:10px;color:var(--ink-dim);letter-spacing:.1em;text-transform:uppercase;padding-top:2px}
+.rn-title{font-size:15px;font-weight:500;color:var(--ink);margin-bottom:7px}
+.rn-body{font-size:13.5px;color:var(--ink-dim);line-height:1.65}
+
+/* METRICS */
+.met-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ink-faint);margin-top:58px;border:.5px solid var(--ink-faint)}
+.met-cell{background:var(--bg);padding:44px 34px}
+.met-n{font-family:var(--serif);font-size:clamp(44px,5vw,66px);font-weight:900;line-height:1;color:var(--ink);margin-bottom:13px;letter-spacing:-.02em}
+.met-n .a{color:var(--acc)}
+.met-d{font-size:13px;color:var(--ink-dim);line-height:1.6;font-family:var(--mono)}
+.met-tag{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:2px;margin-top:13px}
+.met-tag.dn{background:var(--acc-dim);color:var(--acc)}
+.met-tag.up{background:var(--grn-dim);color:var(--grn)}
+
+/* CRM */
+.crm-grid{display:grid;grid-template-columns:1fr 1fr;gap:66px;margin-top:58px;align-items:start}
+.crm-body{font-size:16.5px;color:rgba(240,234,224,.72)}
+.crm-body p+p{margin-top:18px}
+.crm-feats{margin-top:28px;display:flex;flex-direction:column;gap:9px}
+.crm-feat{display:flex;gap:13px;align-items:flex-start;padding:17px 19px;background:var(--bg2);border:.5px solid var(--ink-faint);border-radius:2px;font-size:14px}
+.feat-tag{font-family:var(--mono);font-size:9.5px;color:var(--acc);padding:4px 7px;border:.5px solid var(--acc-border);border-radius:2px;white-space:nowrap;flex-shrink:0;margin-top:2px;letter-spacing:.06em}
+.feat-txt{color:rgba(240,234,224,.7);line-height:1.55}
+.feat-txt strong{color:var(--ink);font-weight:500}
+
+/* CRM MOCKUP */
+.mock{background:var(--bg2);border:.5px solid var(--ink-faint);border-radius:4px;overflow:hidden;font-family:var(--sans)}
+.mock-top{background:var(--bg3);border-bottom:.5px solid var(--ink-faint);padding:11px 15px;display:flex;align-items:center;justify-content:space-between}
+.mock-ttl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);display:flex;align-items:center;gap:7px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--grn);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.mock-role{font-family:var(--mono);font-size:9px;color:var(--ink-dim)}
+
+.stats-row{display:flex;border-bottom:.5px solid var(--ink-faint)}
+.s-stat{flex:1;padding:13px 14px;border-right:.5px solid var(--ink-faint)}
+.s-stat:last-child{border-right:none}
+.s-stat-n{font-family:var(--serif);font-size:21px;font-weight:700;color:var(--ink)}
+.s-stat-l{font-family:var(--mono);font-size:9px;color:var(--ink-dim);letter-spacing:.09em;text-transform:uppercase;margin-top:2px}
+
+.access-row{padding:9px 13px;border-bottom:.5px solid var(--ink-faint);display:flex;align-items:center;gap:6px}
+.ar-lbl{font-family:var(--mono);font-size:9px;color:var(--ink-dim);margin-right:3px}
+.ap{font-family:var(--mono);font-size:9px;padding:3px 7px;border-radius:2px;letter-spacing:.05em}
+.ap.admin{background:var(--acc-dim);color:var(--acc)}
+.ap.rep{background:rgba(212,168,75,.1);color:var(--amb)}
+.ap.view{background:rgba(240,234,224,.06);color:var(--ink-dim)}
+
+.mock-body{display:grid;grid-template-columns:1fr 128px;height:316px}
+.kb-area{padding:12px 12px;display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.kb-scroll{display:flex;gap:8px;overflow-x:auto;flex:1;padding-bottom:2px}
+.kb-scroll::-webkit-scrollbar{height:2px}
+.kb-scroll::-webkit-scrollbar-track{background:transparent}
+.kb-scroll::-webkit-scrollbar-thumb{background:var(--ink-faint);border-radius:2px}
+
+.k-col{min-width:124px;flex-shrink:0}
+.k-col-h{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}
+.k-n{background:var(--ink-faint);border-radius:8px;padding:1px 5px;font-size:9px;color:var(--ink-dim)}
+.k-card{background:var(--bg3);border:.5px solid var(--ink-faint);border-radius:2px;padding:8px 10px;margin-bottom:5px;font-size:11px}
+.k-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:4px;margin-bottom:3px}
+.k-name{color:var(--ink);font-weight:500;font-size:11.5px}
+.k-av{width:15px;height:15px;border-radius:50%;font-size:8px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--mono)}
+.k-av.r{background:rgba(232,98,58,.2);color:var(--acc)}
+.k-av.g{background:rgba(76,175,130,.2);color:var(--grn)}
+.k-av.a{background:rgba(212,168,75,.15);color:var(--amb)}
+.k-meta{color:var(--ink-dim);font-size:10px;font-family:var(--mono);margin-bottom:5px}
+.k-tags{display:flex;gap:3px;flex-wrap:wrap}
+.kt{font-size:9px;padding:2px 5px;border-radius:2px;font-family:var(--mono)}
+.kt.hot{background:var(--acc-dim);color:var(--acc)}
+.kt.warm{background:rgba(212,168,75,.1);color:var(--amb)}
+.kt.nda{background:var(--grn-dim);color:var(--grn)}
+.kt.cold{background:rgba(240,234,224,.05);color:rgba(240,234,224,.35)}
+.k-tasks{display:flex;align-items:center;gap:3px;margin-top:5px}
+.k-check{width:8px;height:8px;border-radius:1px;border:.5px solid;display:flex;align-items:center;justify-content:center;font-size:6px}
+.k-check.done{border-color:var(--grn);background:var(--grn-dim);color:var(--grn)}
+.k-check.todo{border-color:var(--ink-faint)}
+.k-task-lbl{font-family:var(--mono);font-size:9px;color:var(--ink-dim);margin-left:2px}
+
+/* feed */
+.feed{border-left:.5px solid var(--ink-faint);overflow-y:auto;display:flex;flex-direction:column}
+.feed::-webkit-scrollbar{width:2px}
+.feed::-webkit-scrollbar-thumb{background:var(--ink-faint)}
+.feed-hd{padding:9px 10px 8px;font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-dim);border-bottom:.5px solid var(--ink-faint);display:flex;align-items:center;gap:5px;position:sticky;top:0;background:var(--bg2)}
+.feed-ld{width:5px;height:5px;border-radius:50%;background:var(--grn);animation:pulse 2s ease-in-out infinite}
+.f-item{padding:8px 10px;border-bottom:.5px solid var(--ink-faint);flex-shrink:0}
+.f-item:last-child{border-bottom:none}
+.f-act{font-size:10.5px;color:var(--ink);line-height:1.4;margin-bottom:2px}
+.f-act strong{color:var(--acc);font-weight:400}
+.f-time{font-family:var(--mono);font-size:9px;color:var(--ink-dim)}
+
+/* STACK */
+.stack-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:42px}
+.s-tag{font-family:var(--mono);font-size:11.5px;padding:8px 14px;border:.5px solid var(--ink-faint);border-radius:2px;color:var(--ink-dim);letter-spacing:.04em;transition:border-color .2s,color .2s;cursor:default}
+.s-tag:hover{border-color:var(--acc-border);color:var(--acc)}
+
+/* FOOTER */
+.foot{padding:52px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.foot-name{font-family:var(--serif);font-size:18px;font-weight:700}
+.foot-copy{font-family:var(--mono);font-size:11px;color:var(--ink-dim)}
+
+/* STORY */
+.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ink-faint);margin-top:56px;border:.5px solid var(--ink-faint)}
+.story-cell{background:var(--bg);padding:44px 38px}
+.story-beat{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.story-beat-line{height:1px;width:20px;flex-shrink:0}
+.story-beat.before .story-beat-line{background:rgba(232,98,58,.5)}
+.story-beat.before span{color:rgba(232,98,58,.7)}
+.story-beat.shift .story-beat-line{background:var(--amb)}
+.story-beat.shift span{color:var(--amb)}
+.story-beat.after .story-beat-line{background:var(--grn)}
+.story-beat.after span{color:var(--grn)}
+.story-heading{font-family:var(--serif);font-size:22px;font-weight:700;line-height:1.15;margin-bottom:18px;letter-spacing:-.01em}
+.story-body{font-size:15px;color:rgba(240,234,224,.65);line-height:1.75}
+.story-body p+p{margin-top:14px}
+.story-pull{font-family:var(--serif);font-size:17px;font-style:italic;color:var(--ink-dim);border-left:2px solid var(--acc);padding-left:18px;margin-top:22px;line-height:1.5}
+.story-pull.grn{border-left-color:var(--grn)}
+.story-pull.amb{border-left-color:var(--amb)}
+
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:960px){
+  :root{--g:28px}
+  .ov-grid,.crm-grid{grid-template-columns:1fr;gap:44px}
+  .met-grid{grid-template-columns:1fr 1fr}
+  .story-grid{grid-template-columns:1fr}
+  .hero-title{font-size:68px}
+  .research-note{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .met-grid{grid-template-columns:1fr}
+  .hero-title{font-size:50px}
+  .mock-body{grid-template-columns:1fr}
+  .feed{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Case Study &nbsp;·&nbsp; Voice AI &amp; Sales Automation</div>
+    <h1 class="hero-title">Axiom<br><em>Strat Cap</em></h1>
+    <p class="hero-sub">The CEO recorded a custom 30-minute VSL for every single lead — by hand. We cloned his voice and made the whole thing automatic.</p>
+    <div class="hero-meta">
+      <div class="m-item"><span class="m-lbl">Client</span><span class="m-val">Axiom Strat Cap</span></div>
+      <div class="m-sep"></div>
+      <div class="m-item"><span class="m-lbl">Industry</span><span class="m-val">Asset Management Software</span></div>
+      <div class="m-sep"></div>
+      <div class="m-item"><span class="m-lbl">Role</span><span class="m-val">Automation Architect</span></div>
+      <div class="m-sep"></div>
+      <div class="m-item"><span class="m-lbl">Year</span><span class="m-val">2025</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ OVERVIEW ══════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="s-label"><span>01</span> Overview</div>
+    <div class="ov-grid">
+      <div>
+        <h2 class="s-title">A CEO spending his days<br><em>in front of a camera</em></h2>
+        <div class="ov-body">
+          <p>Axiom Strat Cap sells asset management software to financial firms. Their sales process hinged on a VSL — a video sales letter — where the CEO personally walked each prospect through a tailored pitch. Not a generic explainer. A fully customised, 30-minute presentation built around that specific lead's firm, their challenges, and how the product addressed them.</p>
+          <p>It worked. The conversion rate on these videos was exceptional. The problem was the time it consumed. Every new lead meant the CEO back in front of the camera — scripting, recording, re-recording, editing — for hours. As the pipeline grew, the VSL process became a bottleneck that was physically impossible to scale.</p>
+          <p>The brief was precise: keep everything that made the VSLs effective — the CEO's voice, his delivery, the personalisation — and eliminate everything that required him to be in the room. The result needed to feel indistinguishable from a video he'd recorded himself.</p>
+        </div>
+      </div>
+      <div>
+        <div class="callout">
+          <div class="callout-n">15min</div>
+          <div class="callout-l">From form submission to a fully personalised 30-minute VSL landing in the lead's inbox — down from hours of manual recording, editing and sending.</div>
+        </div>
+        <div class="callout" style="border-left-color:var(--grn)">
+          <div class="callout-n" style="color:var(--grn);font-size:50px;">100%</div>
+          <div class="callout-l">Voice authenticity — every generated VSL uses an exact clone of the CEO's voice, trained on his recordings, indistinguishable from the real thing.</div>
+        </div>
+        <div class="callout" style="border-left-color:var(--amb)">
+          <div class="callout-n" style="color:var(--amb);font-size:50px;">Zero</div>
+          <div class="callout-l">Camera time required from the CEO per lead. He records once for the evergreen segments. The system handles everything else, forever.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STORY ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="s-label"><span>02</span> The Story</div>
+    <h2 class="s-title">Before, during,<br><em>and after</em></h2>
+    <div class="story-grid">
+
+      <div class="story-cell">
+        <div class="story-beat before"><div class="story-beat-line"></div><span>Before</span></div>
+        <div class="story-heading">The most valuable hour of the CEO's day — spent on camera, alone</div>
+        <div class="story-body">
+          <p>Every new lead in the pipeline triggered the same sequence. The CEO would research the firm — their AUM, their current tools, their pain points — script a personalised angle, set up the camera, and record. Thirty minutes of material. Usually two or three takes. Then editing, then export, then sending.</p>
+          <p>The videos were good. Genuinely good. They felt personal because they were personal — the CEO knew the lead's name, their firm, their specific situation. Prospects responded to that. The conversion rate justified the process.</p>
+          <p>But as inbound volume grew, the math stopped working. A pipeline of ten active leads meant ten VSLs to record. Some weeks, the CEO was spending more time in front of the camera than he was running the company. Leads at the back of the queue waited days for a video that should have reached them the same day they enquired.</p>
+        </div>
+        <div class="story-pull" style="border-left-color:var(--red)">The irony was stark — the very thing that made the sales process work was becoming the thing that made it impossible to scale.</div>
+      </div>
+
+      <div class="story-cell">
+        <div class="story-beat shift"><div class="story-beat-line"></div><span>The shift</span></div>
+        <div class="story-heading">The voice was the product. The recording didn't have to be.</div>
+        <div class="story-body">
+          <p>The VSLs worked because of three things: the CEO's voice and delivery, the personalised content built around the lead, and the structural flow of the pitch. Two of those three things are the same for every lead — the voice and the structure. Only the personalised middle changes.</p>
+          <p>That realisation reframed the entire problem. Instead of asking "how do we help the CEO record faster," the right question was "which parts of this video actually need to be different for each person — and which parts don't?"</p>
+          <p>The answer: the core pitch, the product walkthrough, the proof points — these are evergreen. The CEO records them once, perfectly, and they never need to be re-recorded. Only the lead-specific segments — the intro that names their firm, the section that addresses their particular situation — need to change. And those segments are short, scriptable, and generatable.</p>
+        </div>
+        <div class="story-pull amb">Once you separate the evergreen from the personalised, the solution becomes obvious: clone the voice, generate the custom parts, stitch them together seamlessly.</div>
+      </div>
+
+      <div class="story-cell">
+        <div class="story-beat after"><div class="story-beat-line"></div><span>After</span></div>
+        <div class="story-heading">A lead fills a form. Fifteen minutes later, they're watching their VSL.</div>
+        <div class="story-body">
+          <p>Now when a lead fills out the intake form, the system reads their responses, generates the personalised script segments in the CEO's cloned voice via ElevenLabs, and uses FFmpeg to stitch those segments seamlessly into the pre-recorded evergreen sections. A finished, 30-minute VSL — fully personalised, sounding exactly like the CEO recorded it this morning — is in the lead's inbox within fifteen minutes.</p>
+          <p>The CEO recorded the evergreen segments once. His voice, his delivery, his pacing — all preserved in the clone. Every VSL that goes out sounds like him because it is him, just assembled differently each time.</p>
+          <p>He now runs a larger pipeline than before, responds to every lead the same day, and hasn't sat in front of a camera for a sales video since the system went live. The videos are still personal. The personalisation just happens automatically.</p>
+        </div>
+        <div class="story-pull grn">Same voice. Same quality. Same conversion-driving personalisation. Delivered automatically, to every lead, in fifteen minutes flat.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THE SYSTEM ════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="s-label"><span>03</span> How It Works</div>
+    <h2 class="s-title">Form in.<br><em>VSL out.</em></h2>
+    <p style="color:var(--ink-dim);max-width:540px;font-size:16px;margin-top:-8px;">Six stages. No camera. No editor. No waiting. The CEO's voice does everything — the system just assembles it.</p>
+  </div>
+
+  <div class="flow-outer">
+    <div class="wrap">
+<svg class="flow-svg" viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg" width="100%">
+<defs>
+  <marker id="m0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <path d="M1 1L9 5L1 9" fill="none" stroke="#484530" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <marker id="ma" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <path d="M1 1L9 5L1 9" fill="none" stroke="#C9A84C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <marker id="mg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <path d="M1 1L9 5L1 9" fill="none" stroke="#4CAF82" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Node width=136, gap=20, total=(136×6)+(20×5)=916, start x=22 -->
+
+<!-- 01 Form -->
+<rect x="22"  y="48" width="136" height="62" rx="2.5" fill="#18160C" stroke="#2E2C1A" stroke-width=".5"/>
+<text x="90"  y="72"  text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(201,168,76,.65)" letter-spacing=".1em">STEP 01</text>
+<text x="90"  y="88"  text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EDE6">Lead fills</text>
+<text x="90"  y="102" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EDE6">intake form</text>
+<text x="90"  y="124" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,237,230,.2)">name · firm · context</text>
+
+<!-- 02 Script gen -->
+<rect x="178" y="48" width="136" height="62" rx="2.5" fill="#18160C" stroke="#2E2C1A" stroke-width=".5"/>
+<text x="246" y="72"  text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(201,168,76,.65)" letter-spacing=".1em">STEP 02</text>
+<text x="246" y="88"  text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EDE6">Custom script</text>
+<text x="246" y="102" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EDE6">generated</text>
+<text x="246" y="124" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,237,230,.2)">AI · personalised segments</text>
+
+<!-- 03 ElevenLabs -->
+<rect x="334" y="48" width="136" height="62" rx="2.5" fill="#1A1708" stroke="#C9A84C" stroke-width=".8"/>
+<text x="402" y="72"  text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(201,168,76,.95)" letter-spacing=".1em">STEP 03</text>
+<text x="402" y="88"  text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EDE6">ElevenLabs</text>
+<text x="402" y="102" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EDE6">voice synthesis</text>
+<text x="402" y="124" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,237,230,.2)">CEO voice clone · custom parts</text>
+
+<!-- 04 FFmpeg stitch -->
+<rect x="490" y="48" width="136" height="62" rx="2.5" fill="#1A1708" stroke="#C9A84C" stroke-width=".8"/>
+<text x="558" y="72"  text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(201,168,76,.95)" letter-spacing=".1em">STEP 04</text>
+<text x="558" y="88"  text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EDE6">FFmpeg</text>
+<text x="558" y="102" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EDE6">stitching</text>
+<text x="558" y="124" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,237,230,.2)">custom + evergreen segments</text>
+
+<!-- 05 Render -->
+<rect x="646" y="48" width="136" height="62" rx="2.5" fill="#18160C" stroke="#2E2C1A" stroke-width=".5"/>
+<text x="714" y="72"  text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(201,168,76,.65)" letter-spacing=".1em">STEP 05</text>
+<text x="714" y="88"  text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EDE6">30-min VSL</text>
+<text x="714" y="102" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EDE6">rendered</text>
+<text x="714" y="124" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,237,230,.2)">seamless · full quality</text>
+
+<!-- 06 Email delivery -->
+<rect x="802" y="48" width="136" height="62" rx="2.5" fill="#0E1A14" stroke="#4CAF82" stroke-width=".8"/>
+<text x="870" y="72"  text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(76,175,130,.9)" letter-spacing=".1em">STEP 06</text>
+<text x="870" y="88"  text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EDE6">Delivered to</text>
+<text x="870" y="102" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EDE6">lead's inbox</text>
+<text x="870" y="124" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,237,230,.2)">within 15 minutes</text>
+
+<!-- Arrows -->
+<line x1="158" y1="79" x2="176" y2="79" stroke="#484530" stroke-width=".8" marker-end="url(#m0)"/>
+<line x1="314" y1="79" x2="332" y2="79" stroke="#C9A84C" stroke-width=".8" opacity=".55" marker-end="url(#ma)"/>
+<line x1="470" y1="79" x2="488" y2="79" stroke="#C9A84C" stroke-width=".8" opacity=".55" marker-end="url(#ma)"/>
+<line x1="626" y1="79" x2="644" y2="79" stroke="#484530" stroke-width=".8" marker-end="url(#m0)"/>
+<line x1="782" y1="79" x2="800" y2="79" stroke="#4CAF82" stroke-width=".8" opacity=".7" marker-end="url(#mg)"/>
+
+<!-- Segment annotation below -->
+<rect x="22" y="170" width="292" height="40" rx="2" fill="rgba(240,237,230,.03)" stroke="#2E2C1A" stroke-width=".5"/>
+<text x="168" y="187" text-anchor="middle" font-family="'DM Mono',monospace" font-size="9" fill="rgba(240,237,230,.35)">Personalised segments</text>
+<text x="168" y="202" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,237,230,.22)">intro · firm name · situation · CTA</text>
+
+<rect x="334" y="170" width="292" height="40" rx="2" fill="rgba(201,168,76,.04)" stroke="rgba(201,168,76,.2)" stroke-width=".5"/>
+<text x="480" y="187" text-anchor="middle" font-family="'DM Mono',monospace" font-size="9" fill="rgba(201,168,76,.55)">Evergreen segments (recorded once)</text>
+<text x="480" y="202" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,237,230,.22)">product walkthrough · proof points · close</text>
+
+<!-- Time callout -->
+<text x="870" y="172" text-anchor="middle" font-family="'DM Mono',monospace" font-size="9" fill="rgba(76,175,130,.6)">⏱ &lt; 15 minutes</text>
+<text x="870" y="187" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,237,230,.22)">end-to-end</text>
+
+<!-- Legend -->
+<line x1="22"  y1="258" x2="42"  y2="258" stroke="#C9A84C" stroke-width="1.2"/>
+<text x="48"  y="262" font-family="'DM Mono',monospace" font-size="9" fill="rgba(240,237,230,.3)">Voice AI pipeline</text>
+<line x1="172" y1="258" x2="192" y2="258" stroke="#4CAF82" stroke-width="1.2"/>
+<text x="198" y="262" font-family="'DM Mono',monospace" font-size="9" fill="rgba(240,237,230,.3)">Delivery</text>
+<line x1="272" y1="258" x2="292" y2="258" stroke="#484530" stroke-width="1.2"/>
+<text x="298" y="262" font-family="'DM Mono',monospace" font-size="9" fill="rgba(240,237,230,.3)">Standard pipeline</text>
+</svg>
+    </div>
+  </div>
+
+  <!-- Voice clone callout -->
+  <div class="wrap">
+    <div class="research-note" style="margin-top:40px;">
+      <div class="rn-step">Step 03</div>
+      <div>
+        <div class="rn-title">Voice cloning — trained on the CEO, indistinguishable from the real thing</div>
+        <div class="rn-body">ElevenLabs was trained on a curated library of the CEO's existing recordings — enough material to capture his cadence, his pauses, his natural variation in emphasis. The clone doesn't just reproduce his voice; it reproduces how he speaks. Custom segment scripts are fed through the clone and rendered as audio that sits seamlessly alongside the segments he recorded himself. Prospects can't tell the difference — because tonally, there isn't one.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ METRICS ═══════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="s-label"><span>04</span> Results</div>
+    <h2 class="s-title">What changed<br><em>after launch</em></h2>
+    <div class="met-grid">
+      <div class="met-cell">
+        <div class="met-n"><span class="a">−98</span>%</div>
+        <div class="met-d">VSL production time</div>
+        <div class="met-tag dn">hours of recording → 15 min</div>
+      </div>
+      <div class="met-cell">
+        <div class="met-n"><span class="a">Zero</span></div>
+        <div class="met-d">Camera hours per lead</div>
+        <div class="met-tag dn">CEO records once, forever</div>
+      </div>
+      <div class="met-cell">
+        <div class="met-n" style="font-size:clamp(36px,4vw,52px);"><span class="a">Same</span></div>
+        <div class="met-d">Conversion quality</div>
+        <div class="met-tag up">personalisation fully preserved</div>
+      </div>
+      <div class="met-cell">
+        <div class="met-n"><span class="a">∞</span></div>
+        <div class="met-d">Pipeline scalability</div>
+        <div class="met-tag up">no ceiling on lead volume</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STACK ══════════════════════════════════════════════════════════ -->
+<section style="border-bottom:none">
+  <div class="wrap">
+    <div class="s-label"><span>05</span> Technical Stack</div>
+    <h2 class="s-title">Built on<br><em>what works</em></h2>
+    <p style="color:var(--ink-dim);max-width:520px;font-size:16px;">A tight, purpose-built stack — ElevenLabs for the voice, FFmpeg for the assembly, n8n to orchestrate it all.</p>
+    <div class="stack-grid">
+      <span class="s-tag">ElevenLabs (voice clone)</span>
+      <span class="s-tag">FFmpeg (video stitching)</span>
+      <span class="s-tag">n8n</span>
+      <span class="s-tag">OpenAI GPT-4o</span>
+      <span class="s-tag">Typeform</span>
+      <span class="s-tag">Gmail SMTP</span>
+      <span class="s-tag">Webhook Triggers</span>
+      <span class="s-tag">Cloud storage (video hosting)</span>
+      <span class="s-tag">Custom Prompt Engineering</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═════════════════════════════════════════════════════════ -->
+<div class="wrap">
+  <div class="foot">
+    <span class="foot-name">Abdullah Mustafa</span>
+    <span class="foot-copy">Portfolio Case Study · Axiom Strat Cap · 2025</span>
+  </div>
+</div>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'none';
+      }
+    });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.story-cell').forEach((el, i) => {
+    el.style.cssText = `opacity:0;transform:translateY(14px);transition:opacity .6s ${i*.12}s ease,transform .6s ${i*.12}s ease`;
+    io.observe(el);
+  });
+  document.querySelectorAll('.met-cell').forEach((el, i) => {
+    el.style.cssText = `opacity:0;transform:translateY(16px);transition:opacity .6s ${i*.09}s ease,transform .6s ${i*.09}s ease`;
+    io.observe(el);
+  });
+  document.querySelectorAll('.callout').forEach((el, i) => {
+    el.style.cssText = `opacity:0;transform:translateY(12px);transition:opacity .6s ${i*.12}s ease,transform .6s ${i*.12}s ease`;
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
