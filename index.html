@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdullah Mustafa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,700;0,9..144,900;1,9..144,200;1,9..144,400;1,9..144,700;1,9..144,900&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --ink:#F2EDE4;
+  --ink-dim:rgba(242,237,228,0.42);
+  --ink-faint:rgba(242,237,228,0.10);
+  --bg:#0A0908;
+  --bg2:#121110;
+  --bg3:#1A1917;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+}
+
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:rgba(242,237,228,.15) transparent}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:#F2EDE4;color:#0A0908}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:22px 52px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(to bottom,rgba(10,9,8,0.95),transparent);
+  backdrop-filter:blur(0px);
+  transition:backdrop-filter .4s, background .4s;
+}
+nav.scrolled{backdrop-filter:blur(20px);background:rgba(10,9,8,0.85)}
+.nav-name{
+  font-family:var(--serif);font-size:17px;font-weight:700;
+  letter-spacing:-.01em;color:var(--ink);text-decoration:none;
+}
+.nav-links{display:flex;align-items:center;gap:36px}
+.nav-links a{
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-dim);text-decoration:none;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  padding:8px 18px;border:.5px solid rgba(242,237,228,.3);
+  border-radius:2px;color:var(--ink);text-decoration:none;
+  transition:background .2s, border-color .2s;
+}
+.nav-cta:hover{background:rgba(242,237,228,.06);border-color:rgba(242,237,228,.5)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:flex-end;
+  padding:0 52px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* ambient glow */
+.hero::before{
+  content:'';position:absolute;
+  bottom:-200px;left:-100px;
+  width:700px;height:700px;
+  background:radial-gradient(ellipse at center,rgba(242,237,228,0.035) 0%,transparent 65%);
+  pointer-events:none;
+}
+
+.hero-left{
+  padding-top:140px;
+  padding-bottom:80px;
+  display:flex;flex-direction:column;
+  justify-content:flex-end;
+  position:relative;z-index:2;
+}
+
+.hero-eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-dim);
+  margin-bottom:28px;
+  display:flex;align-items:center;gap:14px;
+  opacity:0;animation:rise .8s .1s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero-eyebrow::before{content:'';display:block;width:20px;height:1px;background:var(--ink-dim)}
+
+.hero-name{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(72px,10vw,132px);
+  line-height:.88;letter-spacing:-.03em;
+  margin-bottom:32px;
+  opacity:0;animation:rise .9s .18s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero-name .first{display:block;color:var(--ink)}
+.hero-name .last{display:block;color:var(--ink);font-style:italic}
+
+.hero-tagline{
+  font-family:var(--serif);font-size:clamp(17px,2vw,22px);
+  font-weight:200;line-height:1.5;
+  color:var(--ink-dim);max-width:480px;
+  margin-bottom:52px;
+  opacity:0;animation:rise .8s .3s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero-tagline em{font-style:italic;color:var(--ink)}
+
+.hero-actions{
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  opacity:0;animation:rise .8s .42s cubic-bezier(.16,1,.3,1) forwards;
+}
+.btn-primary{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;
+  padding:13px 28px;background:var(--ink);color:var(--bg);
+  border-radius:2px;text-decoration:none;font-weight:500;
+  transition:opacity .2s;
+}
+.btn-primary:hover{opacity:.88}
+.btn-ghost{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;
+  padding:13px 28px;border:.5px solid rgba(242,237,228,.3);
+  color:var(--ink);border-radius:2px;text-decoration:none;
+  transition:border-color .2s,background .2s;
+}
+.btn-ghost:hover{border-color:rgba(242,237,228,.55);background:rgba(242,237,228,.04)}
+
+/* photo column */
+.hero-right{
+  position:relative;
+  height:100vh;
+  overflow:hidden;
+}
+.hero-photo{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:100%;
+  object-fit:cover;
+  object-position:center 15%;
+  filter:grayscale(15%) contrast(1.08) brightness(1.05);
+  mask-image:linear-gradient(to bottom,rgba(10,9,8,1) 55%,rgba(10,9,8,0.3) 85%,rgba(10,9,8,0) 100%);
+  -webkit-mask-image:linear-gradient(to bottom,rgba(10,9,8,1) 55%,rgba(10,9,8,0.3) 85%,rgba(10,9,8,0) 100%);
+  opacity:0;animation:fadeIn 1.2s .5s ease forwards;
+}
+
+/* scroll indicator */
+.scroll-hint{
+  position:absolute;bottom:36px;left:52px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-dim);
+  display:flex;align-items:center;gap:10px;
+  opacity:0;animation:rise .8s .7s cubic-bezier(.16,1,.3,1) forwards;
+}
+.scroll-hint::after{
+  content:'';display:block;width:28px;height:.5px;background:var(--ink-dim);
+  animation:scrollbar 2s 1.5s ease-in-out infinite;
+}
+@keyframes scrollbar{0%,100%{width:28px}50%{width:48px}}
+
+/* ── TICKER ── */
+.ticker-wrap{
+  border-top:.5px solid var(--ink-faint);
+  border-bottom:.5px solid var(--ink-faint);
+  overflow:hidden;padding:14px 0;
+  background:var(--bg2);
+}
+.ticker-track{
+  display:flex;width:max-content;
+  animation:ticker 28s linear infinite;
+}
+.ticker-track:hover{animation-play-state:paused}
+.ticker-item{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-dim);
+  padding:0 32px;white-space:nowrap;
+  display:flex;align-items:center;gap:32px;
+}
+.ticker-item::after{content:'·';color:rgba(242,237,228,.2)}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTIONS SHARED ── */
+.section{padding:120px 52px;border-top:.5px solid var(--ink-faint)}
+
+.s-num{
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-dim);
+  margin-bottom:64px;display:flex;align-items:center;gap:12px;
+}
+.s-num::before{content:'';display:block;width:18px;height:.5px;background:var(--ink-faint)}
+
+/* ── WHAT I BUILD ── */
+.build-grid{display:grid;grid-template-columns:340px 1fr;gap:80px;align-items:start}
+.build-heading{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(40px,5vw,62px);
+  line-height:1.02;letter-spacing:-.025em;
+  position:sticky;top:120px;
+}
+.build-heading em{font-style:italic;color:var(--ink-dim)}
+.build-items{display:flex;flex-direction:column;gap:0}
+.build-item{
+  padding:36px 0;border-bottom:.5px solid var(--ink-faint);
+  display:grid;grid-template-columns:52px 1fr;gap:24px;align-items:start;
+  transition:opacity .3s;
+}
+.build-item:first-child{border-top:.5px solid var(--ink-faint)}
+.build-item:hover .build-item-title{color:var(--ink)}
+.build-n{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  color:var(--ink-dim);padding-top:4px;
+}
+.build-item-title{
+  font-family:var(--serif);font-size:26px;font-weight:700;
+  line-height:1.1;letter-spacing:-.015em;margin-bottom:14px;
+  color:rgba(242,237,228,.85);transition:color .25s;
+}
+.build-item-body{
+  font-size:15px;line-height:1.75;color:var(--ink-dim);
+  margin-bottom:18px;
+}
+.build-tags{display:flex;flex-wrap:wrap;gap:6px}
+.build-tag{
+  font-family:var(--mono);font-size:10px;letter-spacing:.05em;
+  padding:4px 10px;border:.5px solid var(--ink-faint);
+  border-radius:2px;color:var(--ink-dim);
+}
+
+/* ── CASE STUDIES ── */
+.cases-header{
+  display:grid;grid-template-columns:1fr auto;
+  align-items:end;margin-bottom:0;
+}
+.cases-heading{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(40px,5vw,62px);
+  line-height:1.02;letter-spacing:-.025em;
+}
+.cases-heading em{font-style:italic;color:var(--ink-dim)}
+.cases-count{
+  font-family:var(--mono);font-size:11px;
+  letter-spacing:.1em;color:var(--ink-dim);
+  text-transform:uppercase;margin-bottom:8px;
+}
+
+.case-list{margin-top:72px}
+.case-row{
+  display:grid;
+  grid-template-columns:80px 1fr auto;
+  gap:40px;align-items:start;
+  padding:44px 0;
+  border-top:.5px solid var(--ink-faint);
+  text-decoration:none;color:inherit;
+  transition:background .2s;
+  position:relative;
+  cursor:pointer;
+}
+.case-client{
+  font-family:var(--serif);font-size:22px;font-weight:900;
+  letter-spacing:-.02em;color:var(--ink);
+}
+.case-cto{
+  font-family:var(--mono);font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-dim);
+  padding:3px 8px;border:.5px solid var(--ink-faint);border-radius:2px;
+  display:inline-flex;align-items:center;gap:5px;margin-left:2px;
+}
+.case-row:last-child{border-bottom:.5px solid var(--ink-faint)}
+.case-row::after{
+  content:'';position:absolute;
+  left:0;right:0;top:0;bottom:0;
+  background:rgba(242,237,228,.025);
+  opacity:0;transition:opacity .25s;
+  pointer-events:none;
+}
+.case-row:hover::after{opacity:1}
+.case-row:hover .case-arrow{transform:translate(4px,-4px)}
+.case-row:hover .case-title{color:var(--ink)}
+
+.case-idx{
+  font-family:var(--serif);font-size:52px;font-weight:900;
+  line-height:1;letter-spacing:-.04em;
+  color:rgba(242,237,228,.1);padding-top:4px;
+  transition:color .25s;
+}
+.case-row:hover .case-idx{color:rgba(242,237,228,.2)}
+
+.case-body{display:flex;flex-direction:column;gap:12px}
+.case-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.case-client{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-dim);
+}
+.case-sep{width:1px;height:10px;background:var(--ink-faint)}
+.case-industry{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+  color:var(--ink-dim);
+}
+.case-title{
+  font-family:var(--serif);font-size:clamp(24px,3vw,36px);
+  font-weight:700;line-height:1.08;letter-spacing:-.02em;
+  color:rgba(242,237,228,.82);transition:color .25s;
+}
+.case-desc{
+  font-size:14.5px;color:var(--ink-dim);line-height:1.65;
+  max-width:620px;
+}
+.case-metrics{display:flex;gap:28px;flex-wrap:wrap;margin-top:6px}
+.case-metric{display:flex;flex-direction:column;gap:3px}
+.case-metric-n{
+  font-family:var(--serif);font-size:24px;font-weight:900;
+  letter-spacing:-.02em;line-height:1;
+}
+.case-metric-l{font-family:var(--mono);font-size:9.5px;color:var(--ink-dim);letter-spacing:.06em}
+
+.case-right{
+  display:flex;flex-direction:column;align-items:flex-end;gap:16px;
+  padding-top:8px;
+}
+.case-tag{
+  font-family:var(--mono);font-size:10px;letter-spacing:.08em;
+  padding:5px 12px;border-radius:2px;
+  border:.5px solid;white-space:nowrap;
+}
+.case-arrow{
+  font-size:24px;color:var(--ink-dim);
+  transition:transform .25s cubic-bezier(.16,1,.3,1),color .25s;
+  line-height:1;
+}
+.case-row:hover .case-arrow{color:var(--ink)}
+
+/* colour accents per case */
+.c1 .case-metric-n{color:#E8623A}
+.c1 .case-tag{color:#E8623A;border-color:rgba(232,98,58,.3);background:rgba(232,98,58,.08)}
+.c2 .case-metric-n{color:#4B7CF3}
+.c2 .case-tag{color:#4B7CF3;border-color:rgba(75,124,243,.3);background:rgba(75,124,243,.08)}
+.c3 .case-metric-n{color:#7C5CF3}
+.c3 .case-tag{color:#7C5CF3;border-color:rgba(124,92,243,.3);background:rgba(124,92,243,.08)}
+.c4 .case-metric-n{color:#C9A84C}
+.c4 .case-tag{color:#C9A84C;border-color:rgba(201,168,76,.3);background:rgba(201,168,76,.08)}
+.c5 .case-metric-n{color:#3DBE6E}
+.c5 .case-tag{color:#3DBE6E;border-color:rgba(61,190,110,.3);background:rgba(61,190,110,.08)}
+
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.about-pull{
+  font-family:var(--serif);font-size:clamp(28px,3.5vw,42px);
+  font-weight:700;font-style:italic;
+  line-height:1.18;letter-spacing:-.02em;
+  color:rgba(242,237,228,.82);
+}
+.about-pull strong{font-style:normal;color:var(--ink)}
+.about-right{display:flex;flex-direction:column;gap:32px;padding-top:8px}
+.about-body{font-size:16px;line-height:1.8;color:var(--ink-dim)}
+.about-body p+p{margin-top:16px}
+.about-facts{display:flex;flex-direction:column;gap:0;border:.5px solid var(--ink-faint);border-radius:2px;overflow:hidden}
+.about-fact{
+  display:grid;grid-template-columns:110px 1fr;
+  border-bottom:.5px solid var(--ink-faint);
+}
+.about-fact:last-child{border-bottom:none}
+.fact-label{
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-dim);
+  padding:14px 16px;border-right:.5px solid var(--ink-faint);
+  background:var(--bg2);
+}
+.fact-value{
+  font-size:14px;color:var(--ink);padding:14px 18px;line-height:1.4;
+}
+
+/* ── CONTACT ── */
+.contact-section{padding:120px 52px 100px;border-top:.5px solid var(--ink-faint)}
+.contact-heading{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(56px,9vw,112px);
+  line-height:.9;letter-spacing:-.035em;
+  margin-bottom:64px;
+}
+.contact-heading em{font-style:italic;color:var(--ink-dim)}
+.contact-items{display:flex;flex-direction:column;gap:0}
+.contact-item{
+  display:grid;grid-template-columns:140px 1fr auto;
+  align-items:center;gap:32px;
+  padding:28px 0;border-top:.5px solid var(--ink-faint);
+  text-decoration:none;color:inherit;
+  transition:opacity .2s;
+}
+.contact-item:last-child{border-bottom:.5px solid var(--ink-faint)}
+.contact-item:hover{opacity:.65}
+.contact-method{
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-dim);
+}
+.contact-value{
+  font-family:var(--serif);font-size:clamp(20px,3vw,32px);
+  font-weight:700;letter-spacing:-.015em;line-height:1;
+}
+.contact-arrow{font-size:20px;color:var(--ink-dim)}
+
+/* ── FOOTER ── */
+footer{
+  padding:28px 52px;border-top:.5px solid var(--ink-faint);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+}
+.foot-l{font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);letter-spacing:.06em}
+.foot-r{font-family:var(--mono);font-size:10.5px;color:var(--ink-dim)}
+
+/* ── ANIMATIONS ── */
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal-l{opacity:0;transform:translateX(-16px);transition:opacity .7s ease,transform .7s ease}
+.reveal-l.in{opacity:1;transform:translateX(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  nav{padding:20px 28px}
+  .hero{grid-template-columns:1fr 340px;padding:0 28px 0 28px}
+  .section{padding:96px 28px}
+  .contact-section{padding:96px 28px 80px}
+  footer{padding:24px 28px}
+}
+@media(max-width:768px){
+  nav .nav-links{display:none}
+  .hero{grid-template-columns:1fr;padding:0 24px 60px}
+  .hero-right{display:none}
+  .hero-left{padding-top:120px}
+  .build-grid{grid-template-columns:1fr}
+  .build-heading{position:static;margin-bottom:40px}
+  .cases-header{grid-template-columns:1fr}
+  .case-row{grid-template-columns:52px 1fr;gap:20px}
+  .case-right{display:none}
+  .about-grid{grid-template-columns:1fr}
+  .contact-item{grid-template-columns:100px 1fr}
+  .contact-arrow{display:none}
+  .contact-heading{font-size:52px}
+  .section{padding:72px 24px}
+  .contact-section{padding:72px 24px 64px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="#" class="nav-name">AM</a>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact" class="nav-cta">Get in touch</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Systems &nbsp;·&nbsp; Agents &nbsp;·&nbsp; Consulting</div>
+    <h1 class="hero-name">
+      <span class="first">Abdullah</span>
+      <span class="last">Mustafa</span>
+    </h1>
+    <p class="hero-tagline">
+      I help businesses <em>equip intelligence</em> — designing and building the systems, agents, and pipelines that replace manual work, compress timelines, and make scale feel effortless.
+    </p>
+    <div class="hero-actions">
+      <a href="#work" class="btn-primary">View my work</a>
+      <a href="#contact" class="btn-ghost">Let's talk</a>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll to explore</div>
+</section>
+
+<!-- ── TICKER ── -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <div class="ticker-item">Workflow Automation</div>
+    <div class="ticker-item">Intelligent Agents</div>
+    <div class="ticker-item">CRM Systems</div>
+    <div class="ticker-item">Voice Cloning</div>
+    <div class="ticker-item">Lead Generation</div>
+    <div class="ticker-item">WhatsApp Automation</div>
+    <div class="ticker-item">Content Pipelines</div>
+    <div class="ticker-item">SEO Systems</div>
+    <div class="ticker-item">Data Enrichment</div>
+    <div class="ticker-item">Sales Funnel Systems</div>
+    <div class="ticker-item">HR Automation</div>
+    <div class="ticker-item">Web Scraping</div>
+    <div class="ticker-item">Business Consulting</div>
+    <div class="ticker-item">System Architecture</div>
+    <div class="ticker-item">Email Automation</div>
+    <div class="ticker-item">Sentiment Analysis</div>
+    <div class="ticker-item">Workflow Automation</div>
+    <div class="ticker-item">Intelligent Agents</div>
+    <div class="ticker-item">CRM Systems</div>
+    <div class="ticker-item">Voice Cloning</div>
+    <div class="ticker-item">Lead Generation</div>
+    <div class="ticker-item">WhatsApp Automation</div>
+    <div class="ticker-item">Content Pipelines</div>
+    <div class="ticker-item">SEO Systems</div>
+    <div class="ticker-item">Data Enrichment</div>
+    <div class="ticker-item">Sales Funnel Systems</div>
+    <div class="ticker-item">HR Automation</div>
+    <div class="ticker-item">Web Scraping</div>
+    <div class="ticker-item">Business Consulting</div>
+    <div class="ticker-item">System Architecture</div>
+    <div class="ticker-item">Email Automation</div>
+    <div class="ticker-item">Sentiment Analysis</div>
+  </div>
+</div>
+
+<!-- ── WHAT I BUILD ── -->
+<div class="section" id="services">
+  <div class="s-num">01 &nbsp; What I build</div>
+  <div class="build-grid">
+    <div class="build-heading reveal-l">
+      Built to<br>work<br><em>smarter</em>
+    </div>
+    <div class="build-items">
+
+      <div class="build-item reveal">
+        <div class="build-n">001</div>
+        <div>
+          <div class="build-item-title">Consulting & systems thinking</div>
+          <div class="build-item-body">Before anything gets built, I diagnose. I map out where a business is losing time, money, or consistency to manual work — and design the architecture that fixes it. Clients come with a vague problem and leave with a clear system blueprint and a plan to execute it.</div>
+          <div class="build-tags">
+            <span class="build-tag">Process mapping</span>
+            <span class="build-tag">Systems design</span>
+            <span class="build-tag">ROI scoping</span>
+            <span class="build-tag">Technical strategy</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="build-item reveal">
+        <div class="build-n">002</div>
+        <div>
+          <div class="build-item-title">Intelligent agents & conversational systems</div>
+          <div class="build-item-body">Agents that live inside the channels people already use — WhatsApp, email, voice — and handle complex, multi-step tasks autonomously. From multilingual HR bots grounded in company policy, to voice-cloned sales systems that personalise themselves per lead.</div>
+          <div class="build-tags">
+            <span class="build-tag">LLMs</span>
+            <span class="build-tag">ElevenLabs</span>
+            <span class="build-tag">RAG</span>
+            <span class="build-tag">WhatsApp API</span>
+            <span class="build-tag">Voice cloning</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="build-item reveal">
+        <div class="build-n">003</div>
+        <div>
+          <div class="build-item-title">End-to-end workflow automation</div>
+          <div class="build-item-body">Full pipeline systems triggered by a form, a webhook, or a schedule — running research, writing, outreach, follow-up, and CRM updates with or without a human in the loop. Built to handle edge cases, conditional logic, and the messiness of real-world data.</div>
+          <div class="build-tags">
+            <span class="build-tag">n8n</span>
+            <span class="build-tag">Webhook triggers</span>
+            <span class="build-tag">Conditional logic</span>
+            <span class="build-tag">Multi-step pipelines</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="build-item reveal">
+        <div class="build-n">004</div>
+        <div>
+          <div class="build-item-title">Data systems & lead engines</div>
+          <div class="build-item-body">Systems that find, enrich, validate, and deliver structured data at machine speed. Lead engines that return ranked decision-maker contact lists. Scraping pipelines that turn the public internet into a clean, queryable dataset pushed straight into a CRM.</div>
+          <div class="build-tags">
+            <span class="build-tag">Web scraping</span>
+            <span class="build-tag">Email validation</span>
+            <span class="build-tag">GHL · Airtable</span>
+            <span class="build-tag">Decision-maker ranking</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="build-item reveal">
+        <div class="build-n">005</div>
+        <div>
+          <div class="build-item-title">Content & publishing pipelines</div>
+          <div class="build-item-body">Automated content engines that scrape sources, analyse sentiment, generate SEO-optimised output through multi-pass review chains, and push to a CMS queue — ready for one-click publishing. Built for media properties that need to publish every day, without fail.</div>
+          <div class="build-tags">
+            <span class="build-tag">SEO optimisation</span>
+            <span class="build-tag">Sentiment analysis</span>
+            <span class="build-tag">Cron scheduling</span>
+            <span class="build-tag">CMS integration</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── CASE STUDIES ── -->
+<div class="section" id="work">
+  <div class="s-num">02 &nbsp; Selected work</div>
+  <div class="cases-header">
+    <h2 class="cases-heading reveal">Five systems.<br><em>Five problems solved.</em></h2>
+    <div class="cases-count reveal">2024 — 2025</div>
+  </div>
+
+  <div class="case-list">
+
+    <!-- 1. FASSET -->
+    <a class="case-row c1 reveal" href="./fasset-case-study.html" target="_blank">
+      <div class="case-idx">01</div>
+      <div class="case-body">
+        <div class="case-meta">
+          <span class="case-client">FASSET</span>
+          <span class="case-cto">↗ Full case study</span>
+          <div class="case-sep"></div>
+          <span class="case-industry">World's Fastest Growing Neobank</span>
+        </div>
+        <div class="case-title">Complete inbound funnel automation + custom CRM</div>
+        <div class="case-desc">Form to signed NDA — fully automated. For the world's fastest growing neobank: web research, personalised pitch deck, post-call analysis, conditional NDA or follow-through, and a live CRM tracking every stage with role-based access and a real-time feed.</div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="case-metric-n">−97%</div><div class="case-metric-l">Response time</div></div>
+          <div class="case-metric"><div class="case-metric-n">3×+</div><div class="case-metric-l">Pipeline capacity</div></div>
+          <div class="case-metric"><div class="case-metric-n">−90%</div><div class="case-metric-l">Manual sales effort</div></div>
+        </div>
+      </div>
+      <div class="case-right">
+        <span class="case-tag">Funnel · CRM · AI</span>
+        <div class="case-arrow">↗</div>
+      </div>
+    </a>
+
+    <!-- 2. ARD Global -->
+    <a class="case-row c2 reveal" href="./ard-global-case-study.html" target="_blank">
+      <div class="case-idx">02</div>
+      <div class="case-body">
+        <div class="case-meta">
+          <span class="case-client">ARD Global</span>
+          <span class="case-cto">↗ Full case study</span>
+          <div class="case-sep"></div>
+          <span class="case-industry">Real Estate · HR Tech · Pakistan</span>
+        </div>
+        <div class="case-title">Complete HR revamp via WhatsApp AI agent</div>
+        <div class="case-desc">A full HR intelligence layer deployed over WhatsApp — answering policy queries, managing leave requests with human-in-the-loop approval, tracking attendance from fingerprint machines, and scheduling HR appointments. Urdu, English, and Punjabi, text and voice.</div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="case-metric-n">−85%</div><div class="case-metric-l">HR query time</div></div>
+          <div class="case-metric"><div class="case-metric-n">100%</div><div class="case-metric-l">Attendance accuracy</div></div>
+          <div class="case-metric"><div class="case-metric-n">3 langs</div><div class="case-metric-l">Zero friction</div></div>
+        </div>
+      </div>
+      <div class="case-right">
+        <span class="case-tag">WhatsApp · Voice AI · HR</span>
+        <div class="case-arrow">↗</div>
+      </div>
+    </a>
+
+    <!-- 3. Crypto -->
+    <a class="case-row c3 reveal" href="./crypto-case-study.html" target="_blank">
+      <div class="case-idx">03</div>
+      <div class="case-body">
+        <div class="case-meta">
+          <span class="case-client">ethereum.pk · crypto.pk</span>
+          <span class="case-cto">↗ Full case study</span>
+          <div class="case-sep"></div>
+          <span class="case-industry">Crypto Media · Content · SEO</span>
+        </div>
+        <div class="case-title">Daily content pipeline — scrape, write, optimise, publish</div>
+        <div class="case-desc">A 6 AM cron job that scrapes crypto news and Twitter sentiment, compiles and analyses it, generates SEO-optimised blog posts and price predictions through a multi-pass optimiser, and pushes everything to a content queue. One human click to publish.</div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="case-metric-n">−95%</div><div class="case-metric-l">Production time</div></div>
+          <div class="case-metric"><div class="case-metric-n">85+</div><div class="case-metric-l">Avg SEO score</div></div>
+          <div class="case-metric"><div class="case-metric-n">Daily</div><div class="case-metric-l">Zero missed days</div></div>
+        </div>
+      </div>
+      <div class="case-right">
+        <span class="case-tag">Scraping · AI Writing · SEO</span>
+        <div class="case-arrow">↗</div>
+      </div>
+    </a>
+
+    <!-- 4. Axiom -->
+    <a class="case-row c4 reveal" href="./axiom-case-study.html" target="_blank">
+      <div class="case-idx">04</div>
+      <div class="case-body">
+        <div class="case-meta">
+          <span class="case-client">Axiom Strat Cap</span>
+          <span class="case-cto">↗ Full case study</span>
+          <div class="case-sep"></div>
+          <span class="case-industry">Asset Management Software · Sales</span>
+        </div>
+        <div class="case-title">Automated personalised VSL engine via voice cloning</div>
+        <div class="case-desc">The CEO was recording a custom 30-minute sales video for every lead. We cloned his voice with ElevenLabs, generated personalised script segments, and used FFmpeg to stitch them seamlessly with evergreen recordings. A fully personal 30-minute VSL in the lead's inbox within 15 minutes of filling a form.</div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="case-metric-n">−98%</div><div class="case-metric-l">Production time</div></div>
+          <div class="case-metric"><div class="case-metric-n">Zero</div><div class="case-metric-l">Camera hours/lead</div></div>
+          <div class="case-metric"><div class="case-metric-n">15 min</div><div class="case-metric-l">End-to-end delivery</div></div>
+        </div>
+      </div>
+      <div class="case-right">
+        <span class="case-tag">Voice AI · ElevenLabs · FFmpeg</span>
+        <div class="case-arrow">↗</div>
+      </div>
+    </a>
+
+    <!-- 5. Smile More -->
+    <a class="case-row c5 reveal" href="./smilmore-case-study.html" target="_blank">
+      <div class="case-idx">05</div>
+      <div class="case-body">
+        <div class="case-meta">
+          <span class="case-client">Smile More Solutions</span>
+          <span class="case-cto">↗ Full case study</span>
+          <div class="case-sep"></div>
+          <span class="case-industry">Marketing Agency · Florida, USA</span>
+        </div>
+        <div class="case-title">On-demand lead generation & enrichment engine</div>
+        <div class="case-desc">Keyword, location, enrichment depth, lead count — four inputs. The system scrapes matching businesses, validates emails, finds phone numbers, pulls social profiles, and discovers up to five decision-makers per company ranked by authority. Everything pushed into GoHighLevel, ready to work.</div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="case-metric-n">−95%</div><div class="case-metric-l">Enrichment time</div></div>
+          <div class="case-metric"><div class="case-metric-n">5×</div><div class="case-metric-l">Decision-makers/lead</div></div>
+          <div class="case-metric"><div class="case-metric-n">100%</div><div class="case-metric-l">Email validity</div></div>
+        </div>
+      </div>
+      <div class="case-right">
+        <span class="case-tag">Lead Gen · GHL · Enrichment</span>
+        <div class="case-arrow">↗</div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- ── ABOUT ── -->
+<div class="section" id="about">
+  <div class="s-num">03 &nbsp; About</div>
+  <div class="about-grid">
+    <div class="about-pull reveal-l">
+      Using intelligence to <strong>exponentially reduce</strong> the work — so the humans who remain are doing only what actually requires them.
+    </div>
+    <div class="about-right">
+      <div class="about-body reveal">
+        <p>I'm based in Lahore, Pakistan — a builder and consultant who works at the boundary of business strategy and intelligent systems. I help companies identify where human effort is being wasted on work that a well-designed system could handle — then I design and build that system.</p>
+        <p>My work spans consulting, architecture, and hands-on building. I've worked across industries — real estate, asset management, crypto media, marketing — and the through-line is always the same: understand the problem deeply, then solve it precisely.</p>
+      </div>
+      <div class="about-facts reveal">
+        <div class="about-fact">
+          <div class="fact-label">Based in</div>
+          <div class="fact-value">Lahore, Pakistan</div>
+        </div>
+        <div class="about-fact">
+          <div class="fact-label">Focus</div>
+          <div class="fact-value">Intelligent systems · Agents · Workflow design · Consulting</div>
+        </div>
+        <div class="about-fact">
+          <div class="fact-label">Stack</div>
+          <div class="fact-value">n8n · Claude · LLMs · ElevenLabs · WhatsApp API · Meta APIs · GHL · Airtable · Antigravity · Whisper · FFmpeg · Puppeteer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONTACT ── -->
+<div class="contact-section" id="contact">
+  <h2 class="contact-heading reveal">
+    Let's<br>build<br><em>something.</em>
+  </h2>
+  <div class="contact-items">
+    <a href="mailto:abdullah.mustafa.1106@gmail.com" class="contact-item reveal">
+      <div class="contact-method">Email</div>
+      <div class="contact-value">abdullah.mustafa.1106@gmail.com</div>
+      <div class="contact-arrow">↗</div>
+    </a>
+    <a href="https://www.linkedin.com/in/abdullah-mustafa-b27035376/" target="_blank" class="contact-item reveal">
+      <div class="contact-method">LinkedIn</div>
+      <div class="contact-value">Abdullah Mustafa</div>
+      <div class="contact-arrow">↗</div>
+    </a>
+    <a href="https://wa.me/923225111401" target="_blank" class="contact-item reveal">
+      <div class="contact-method">WhatsApp</div>
+      <div class="contact-value">+92 322 511 1401</div>
+      <div class="contact-arrow">↗</div>
+    </a>
+    <a href="https://abdnoodleslikes.github.io/portfolio" target="_blank" class="contact-item reveal">
+      <div class="contact-method">Portfolio</div>
+      <div class="contact-value">abdnoodleslikes.github.io/portfolio</div>
+      <div class="contact-arrow">↗</div>
+    </a>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <span class="foot-l">© 2025 Abdullah Mustafa</span>
+  <span class="foot-r">Lahore, Pakistan &nbsp;·&nbsp; Available for projects worldwide</span>
+</footer>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        ro.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal, .reveal-l').forEach((el, i) => {
+    const delay = (i % 4) * 0.08;
+    el.style.transitionDelay = delay + 's';
+    ro.observe(el);
+  });
+
+  // Case rows — stagger per row not global index
+  document.querySelectorAll('.case-row').forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.06) + 's';
+  });
+</script>
+</body>
+</html>
