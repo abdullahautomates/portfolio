@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FASSET — Inbound Funnel Automation · Abdullah Mustafa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --ink:#F0EAE0;
+  --ink-dim:rgba(240,234,224,0.45);
+  --ink-faint:rgba(240,234,224,0.12);
+  --bg:#0C0B09;
+  --bg2:#131210;
+  --bg3:#1A1916;
+  --acc:#E8623A;
+  --acc-dim:rgba(232,98,58,0.13);
+  --acc-border:rgba(232,98,58,0.32);
+  --grn:#4CAF82;
+  --grn-dim:rgba(76,175,130,0.11);
+  --amb:#D4A84B;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+  --max:1120px;
+  --g:52px;
+}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.75;font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--acc);color:#fff}
+
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--g)}
+
+/* HERO */
+.hero{padding:88px 0 108px;border-bottom:.5px solid var(--ink-faint);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-260px;right:-200px;width:680px;height:680px;background:radial-gradient(circle at center,rgba(232,98,58,0.055) 0%,transparent 68%);pointer-events:none}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--acc);text-transform:uppercase;margin-bottom:38px;display:flex;align-items:center;gap:14px;opacity:0;animation:fu .7s .05s cubic-bezier(.16,1,.3,1) forwards}
+.eyebrow::before{content:'';display:block;width:22px;height:1px;background:var(--acc);flex-shrink:0}
+.hero-title{font-family:var(--serif);font-weight:900;font-size:clamp(80px,13vw,150px);line-height:.9;letter-spacing:-.025em;margin-bottom:28px;opacity:0;animation:fu .8s .15s cubic-bezier(.16,1,.3,1) forwards}
+.hero-title em{font-style:italic;color:var(--acc)}
+.hero-sub{font-family:var(--serif);font-size:clamp(18px,2.3vw,25px);font-weight:300;font-style:italic;color:var(--ink-dim);max-width:520px;margin-bottom:60px;line-height:1.45;opacity:0;animation:fu .8s .25s cubic-bezier(.16,1,.3,1) forwards}
+.hero-meta{display:flex;gap:36px;flex-wrap:wrap;align-items:center;opacity:0;animation:fu .8s .35s cubic-bezier(.16,1,.3,1) forwards}
+.m-item{display:flex;flex-direction:column;gap:5px}
+.m-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-dim)}
+.m-val{font-size:15px;font-weight:500;color:var(--ink)}
+.m-sep{width:1px;height:38px;background:var(--ink-faint)}
+
+/* SECTIONS */
+section{padding:100px 0;border-bottom:.5px solid var(--ink-faint)}
+.s-label{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:22px;display:flex;align-items:center;gap:10px}
+.s-label span{color:var(--acc)}
+.s-title{font-family:var(--serif);font-weight:700;font-size:clamp(34px,4.5vw,54px);line-height:1.08;letter-spacing:-.02em;margin-bottom:34px}
+.s-title em{font-style:italic;color:var(--acc)}
+
+/* OVERVIEW */
+.ov-grid{display:grid;grid-template-columns:1fr 296px;gap:84px;align-items:start}
+.ov-body{font-size:17.5px;line-height:1.8;color:rgba(240,234,224,.78)}
+.ov-body p+p{margin-top:22px}
+.callout{background:var(--bg3);border:.5px solid var(--ink-faint);border-left:2px solid var(--acc);padding:28px 26px;border-radius:2px}
+.callout+.callout{margin-top:14px}
+.callout-n{font-family:var(--serif);font-size:64px;font-weight:900;line-height:1;color:var(--acc);margin-bottom:10px}
+.callout-l{font-size:13.5px;color:var(--ink-dim);line-height:1.55}
+
+/* FLOW */
+.flow-outer{margin-top:56px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.flow-svg{display:block;min-width:900px}
+
+/* research callout */
+.research-note{background:var(--bg3);border:.5px solid var(--ink-faint);border-left:2px solid rgba(240,234,224,.12);padding:22px 26px;border-radius:2px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;max-width:700px;margin-top:40px}
+.rn-step{font-family:var(--mono);font-size:10px;color:var(--ink-dim);letter-spacing:.1em;text-transform:uppercase;padding-top:2px}
+.rn-title{font-size:15px;font-weight:500;color:var(--ink);margin-bottom:7px}
+.rn-body{font-size:13.5px;color:var(--ink-dim);line-height:1.65}
+
+/* METRICS */
+.met-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ink-faint);margin-top:58px;border:.5px solid var(--ink-faint)}
+.met-cell{background:var(--bg);padding:44px 34px}
+.met-n{font-family:var(--serif);font-size:clamp(44px,5vw,66px);font-weight:900;line-height:1;color:var(--ink);margin-bottom:13px;letter-spacing:-.02em}
+.met-n .a{color:var(--acc)}
+.met-d{font-size:13px;color:var(--ink-dim);line-height:1.6;font-family:var(--mono)}
+.met-tag{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:2px;margin-top:13px}
+.met-tag.dn{background:var(--acc-dim);color:var(--acc)}
+.met-tag.up{background:var(--grn-dim);color:var(--grn)}
+
+/* CRM */
+.crm-grid{display:grid;grid-template-columns:1fr 1fr;gap:66px;margin-top:58px;align-items:start}
+.crm-body{font-size:16.5px;color:rgba(240,234,224,.72)}
+.crm-body p+p{margin-top:18px}
+.crm-feats{margin-top:28px;display:flex;flex-direction:column;gap:9px}
+.crm-feat{display:flex;gap:13px;align-items:flex-start;padding:17px 19px;background:var(--bg2);border:.5px solid var(--ink-faint);border-radius:2px;font-size:14px}
+.feat-tag{font-family:var(--mono);font-size:9.5px;color:var(--acc);padding:4px 7px;border:.5px solid var(--acc-border);border-radius:2px;white-space:nowrap;flex-shrink:0;margin-top:2px;letter-spacing:.06em}
+.feat-txt{color:rgba(240,234,224,.7);line-height:1.55}
+.feat-txt strong{color:var(--ink);font-weight:500}
+
+/* CRM MOCKUP */
+.mock{background:var(--bg2);border:.5px solid var(--ink-faint);border-radius:4px;overflow:hidden;font-family:var(--sans)}
+.mock-top{background:var(--bg3);border-bottom:.5px solid var(--ink-faint);padding:11px 15px;display:flex;align-items:center;justify-content:space-between}
+.mock-ttl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);display:flex;align-items:center;gap:7px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--grn);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.mock-role{font-family:var(--mono);font-size:9px;color:var(--ink-dim)}
+
+.stats-row{display:flex;border-bottom:.5px solid var(--ink-faint)}
+.s-stat{flex:1;padding:13px 14px;border-right:.5px solid var(--ink-faint)}
+.s-stat:last-child{border-right:none}
+.s-stat-n{font-family:var(--serif);font-size:21px;font-weight:700;color:var(--ink)}
+.s-stat-l{font-family:var(--mono);font-size:9px;color:var(--ink-dim);letter-spacing:.09em;text-transform:uppercase;margin-top:2px}
+
+.access-row{padding:9px 13px;border-bottom:.5px solid var(--ink-faint);display:flex;align-items:center;gap:6px}
+.ar-lbl{font-family:var(--mono);font-size:9px;color:var(--ink-dim);margin-right:3px}
+.ap{font-family:var(--mono);font-size:9px;padding:3px 7px;border-radius:2px;letter-spacing:.05em}
+.ap.admin{background:var(--acc-dim);color:var(--acc)}
+.ap.rep{background:rgba(212,168,75,.1);color:var(--amb)}
+.ap.view{background:rgba(240,234,224,.06);color:var(--ink-dim)}
+
+.mock-body{display:grid;grid-template-columns:1fr 128px;height:316px}
+.kb-area{padding:12px 12px;display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.kb-scroll{display:flex;gap:8px;overflow-x:auto;flex:1;padding-bottom:2px}
+.kb-scroll::-webkit-scrollbar{height:2px}
+.kb-scroll::-webkit-scrollbar-track{background:transparent}
+.kb-scroll::-webkit-scrollbar-thumb{background:var(--ink-faint);border-radius:2px}
+
+.k-col{min-width:124px;flex-shrink:0}
+.k-col-h{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}
+.k-n{background:var(--ink-faint);border-radius:8px;padding:1px 5px;font-size:9px;color:var(--ink-dim)}
+.k-card{background:var(--bg3);border:.5px solid var(--ink-faint);border-radius:2px;padding:8px 10px;margin-bottom:5px;font-size:11px}
+.k-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:4px;margin-bottom:3px}
+.k-name{color:var(--ink);font-weight:500;font-size:11.5px}
+.k-av{width:15px;height:15px;border-radius:50%;font-size:8px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--mono)}
+.k-av.r{background:rgba(232,98,58,.2);color:var(--acc)}
+.k-av.g{background:rgba(76,175,130,.2);color:var(--grn)}
+.k-av.a{background:rgba(212,168,75,.15);color:var(--amb)}
+.k-meta{color:var(--ink-dim);font-size:10px;font-family:var(--mono);margin-bottom:5px}
+.k-tags{display:flex;gap:3px;flex-wrap:wrap}
+.kt{font-size:9px;padding:2px 5px;border-radius:2px;font-family:var(--mono)}
+.kt.hot{background:var(--acc-dim);color:var(--acc)}
+.kt.warm{background:rgba(212,168,75,.1);color:var(--amb)}
+.kt.nda{background:var(--grn-dim);color:var(--grn)}
+.kt.cold{background:rgba(240,234,224,.05);color:rgba(240,234,224,.35)}
+.k-tasks{display:flex;align-items:center;gap:3px;margin-top:5px}
+.k-check{width:8px;height:8px;border-radius:1px;border:.5px solid;display:flex;align-items:center;justify-content:center;font-size:6px}
+.k-check.done{border-color:var(--grn);background:var(--grn-dim);color:var(--grn)}
+.k-check.todo{border-color:var(--ink-faint)}
+.k-task-lbl{font-family:var(--mono);font-size:9px;color:var(--ink-dim);margin-left:2px}
+
+/* feed */
+.feed{border-left:.5px solid var(--ink-faint);overflow-y:auto;display:flex;flex-direction:column}
+.feed::-webkit-scrollbar{width:2px}
+.feed::-webkit-scrollbar-thumb{background:var(--ink-faint)}
+.feed-hd{padding:9px 10px 8px;font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-dim);border-bottom:.5px solid var(--ink-faint);display:flex;align-items:center;gap:5px;position:sticky;top:0;background:var(--bg2)}
+.feed-ld{width:5px;height:5px;border-radius:50%;background:var(--grn);animation:pulse 2s ease-in-out infinite}
+.f-item{padding:8px 10px;border-bottom:.5px solid var(--ink-faint);flex-shrink:0}
+.f-item:last-child{border-bottom:none}
+.f-act{font-size:10.5px;color:var(--ink);line-height:1.4;margin-bottom:2px}
+.f-act strong{color:var(--acc);font-weight:400}
+.f-time{font-family:var(--mono);font-size:9px;color:var(--ink-dim)}
+
+/* STACK */
+.stack-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:42px}
+.s-tag{font-family:var(--mono);font-size:11.5px;padding:8px 14px;border:.5px solid var(--ink-faint);border-radius:2px;color:var(--ink-dim);letter-spacing:.04em;transition:border-color .2s,color .2s;cursor:default}
+.s-tag:hover{border-color:var(--acc-border);color:var(--acc)}
+
+/* FOOTER */
+.foot{padding:52px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.foot-name{font-family:var(--serif);font-size:18px;font-weight:700}
+.foot-copy{font-family:var(--mono);font-size:11px;color:var(--ink-dim)}
+
+/* STORY */
+.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ink-faint);margin-top:56px;border:.5px solid var(--ink-faint)}
+.story-cell{background:var(--bg);padding:44px 38px}
+.story-beat{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.story-beat-line{height:1px;width:20px;flex-shrink:0}
+.story-beat.before .story-beat-line{background:rgba(232,98,58,.5)}
+.story-beat.before span{color:rgba(232,98,58,.7)}
+.story-beat.shift .story-beat-line{background:var(--amb)}
+.story-beat.shift span{color:var(--amb)}
+.story-beat.after .story-beat-line{background:var(--grn)}
+.story-beat.after span{color:var(--grn)}
+.story-heading{font-family:var(--serif);font-size:22px;font-weight:700;line-height:1.15;margin-bottom:18px;letter-spacing:-.01em}
+.story-body{font-size:15px;color:rgba(240,234,224,.65);line-height:1.75}
+.story-body p+p{margin-top:14px}
+.story-pull{font-family:var(--serif);font-size:17px;font-style:italic;color:var(--ink-dim);border-left:2px solid var(--acc);padding-left:18px;margin-top:22px;line-height:1.5}
+.story-pull.grn{border-left-color:var(--grn)}
+.story-pull.amb{border-left-color:var(--amb)}
+
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:960px){
+  :root{--g:28px}
+  .ov-grid,.crm-grid{grid-template-columns:1fr;gap:44px}
+  .met-grid{grid-template-columns:1fr 1fr}
+  .story-grid{grid-template-columns:1fr}
+  .hero-title{font-size:68px}
+  .research-note{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .met-grid{grid-template-columns:1fr}
+  .hero-title{font-size:50px}
+  .mock-body{grid-template-columns:1fr}
+  .feed{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Case Study &nbsp;·&nbsp; Automation &amp; CRM</div>
+    <h1 class="hero-title"><em>FASSET</em></h1>
+    <p class="hero-sub">A zero-touch inbound acquisition engine — from raw lead to signed NDA — with a purpose-built CRM orchestrating every stage in real time.</p>
+    <div class="hero-meta">
+      <div class="m-item"><span class="m-lbl">Client</span><span class="m-val">FASSET</span></div>
+      <div class="m-sep"></div>
+      <div class="m-item"><span class="m-lbl">Role</span><span class="m-val">Automation Architect</span></div>
+      <div class="m-sep"></div>
+      <div class="m-item"><span class="m-lbl">Scope</span><span class="m-val">Funnel · CRM · Workflows</span></div>
+      <div class="m-sep"></div>
+      <div class="m-item"><span class="m-lbl">Year</span><span class="m-val">2025</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ OVERVIEW ══════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="s-label"><span>01</span> Overview</div>
+    <div class="ov-grid">
+      <div>
+        <h2 class="s-title">The problem with<br><em>manual sales</em></h2>
+        <div class="ov-body">
+          <p>FASSET's inbound leads were falling through the cracks. Researching prospects, writing personalised outreach, assembling pitch decks, chasing signatures — every stage demanded hours of human attention per lead. The team was reactive, inconsistent, and perpetually behind.</p>
+          <p>The goal was to compress the entire top-of-funnel into minutes without sacrificing the personalised experience that differentiates a real pitch from a generic blast. Every touchpoint needed to feel crafted — even when nothing human created it.</p>
+          <p>What was built is a fully autonomous acquisition pipeline, with a custom CRM tracking every lead in real time through each stage. The system handles outreach, pitch creation, call scheduling, outcome analysis, and post-call follow-through — adapting its behaviour based on what the AI determines happened on the call.</p>
+        </div>
+      </div>
+      <div>
+        <div class="callout">
+          <div class="callout-n">10s</div>
+          <div class="callout-l">Time from form submission to a personalised first email landing in the prospect's inbox — down from a manual average of six hours.</div>
+        </div>
+        <div class="callout">
+          <div class="callout-n" style="font-size:50px;">100%</div>
+          <div class="callout-l">Of leads receive a fully custom pitch deck generated specifically around them — something that previously took the team two to three hours per prospect.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STORY ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="s-label"><span>02</span> The Story</div>
+    <h2 class="s-title">Before, during,<br><em>and after</em></h2>
+    <div class="story-grid">
+
+      <div class="story-cell">
+        <div class="story-beat before"><div class="story-beat-line"></div><span>Before</span></div>
+        <div class="story-heading">A sales team losing hours before the first email was sent</div>
+        <div class="story-body">
+          <p>Every inbound lead started the same way: someone on the team would open LinkedIn, find the company, try to piece together who this person actually was — their background, their business, what they might care about. Then they'd write an email. Then they'd build a pitch deck, pulling slides, adjusting figures, rewriting copy to feel relevant.</p>
+          <p>On a good day, a lead got a response within a few hours. On a busy day — multiple leads coming in, calls to run, deals to close — a new prospect might wait until the following morning. By then, the conversation had already gone cold. They'd moved on, or a competitor had already reached them.</p>
+          <p>The team wasn't slow. The process was. Every lead required the same sequence of manual steps, and there was no way to run those steps faster without hiring more people to do them.</p>
+        </div>
+        <div class="story-pull">Six hours from form submission to first contact — and that was on a good day. The pipeline wasn't leaking leads. It was haemorrhaging them.</div>
+      </div>
+
+      <div class="story-cell">
+        <div class="story-beat shift"><div class="story-beat-line"></div><span>The shift</span></div>
+        <div class="story-heading">Speed isn't the goal. Removing the delay entirely is.</div>
+        <div class="story-body">
+          <p>The first instinct is to hire faster researchers, better writers, more salespeople. But that scales linearly with cost — and it still doesn't solve the fundamental problem, which is that humans take time to do things that don't require human judgement.</p>
+          <p>Researching a company online, compiling what matters, writing an email that sounds personal, generating a deck with the right framing — none of these steps actually require a person. They require information, pattern recognition, and good writing. All of which a well-designed system handles faster and more consistently than any team member having their fourth coffee of the day.</p>
+          <p>The human value in FASSET's sales process was in the conversation — the call, the relationship, the negotiation. Everything before that call was logistics. The decision was to automate the logistics completely and let the team do only what required them.</p>
+          <p>Sequencing the emails took more deliberation than the automation itself. Sending the welcome, pitch deck, and NDA CTA within minutes of each other felt like spam and overwhelmed leads. Spacing them hours apart broke the momentum entirely. After testing and discussion, 15-minute intervals between each touchpoint became the standard — enough breathing room to feel considered, short enough to keep the lead warm.</p>
+        </div>
+        <div class="story-pull amb">The insight wasn't "use AI to help with sales." It was "identify exactly which parts of sales don't require a human, and remove the human from those parts entirely."</div>
+      </div>
+
+      <div class="story-cell">
+        <div class="story-beat after"><div class="story-beat-line"></div><span>After</span></div>
+        <div class="story-heading">A lead fills the form. Ten seconds later, the pipeline is already running.</div>
+        <div class="story-body">
+          <p>Now, the moment a prospect submits the form, the system is already working. Their LinkedIn is being scraped, their company's news is being pulled, their social activity is being read. By the time a human on the team knows the lead exists, a personalised first email has already landed in the prospect's inbox.</p>
+          <p>By the time the prospect reads that email, a custom pitch deck built around their specific business has been generated and is waiting. A booking link is attached. The CRM already has their full record. The team's only job is to show up to the call prepared — because everything else has already been handled.</p>
+          <p>After the call, the system takes over again: analyses the transcript, determines the outcome, sends the NDA or the follow-through email, and keeps chasing until there's a resolution. The team closes deals. The system handles everything around the deals.</p>
+          <p>One edge case required a separate solution: clients who prefer to sign physically. A second option in the NDA email gives them a link to upload a scanned copy instead. An OCR layer then extracts the document and verifies it's actually signed — because early on, leads were occasionally sending back the original unsigned file, which would have silently passed through without the check.</p>
+        </div>
+        <div class="story-pull grn">The pipeline tripled in capacity without adding a single person. The team didn't get faster — they got to stop doing the things that were slowing them down.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THE SYSTEM ════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="s-label"><span>03</span> The System</div>
+    <h2 class="s-title">Every stage, <em>automated</em></h2>
+    <p style="color:var(--ink-dim);max-width:560px;font-size:16px;margin-top:-8px;">Eight distinct nodes. Two conditional branches. One continuous loop — running without human intervention unless an outcome demands it.</p>
+  </div>
+
+  <!-- FLOW DIAGRAM -->
+  <div class="flow-outer">
+    <div class="wrap">
+<!--
+  ViewBox: 960 × 460
+  Row 1  y=48, h=60  — 5 main nodes, cx: 78 210 342 474 606
+  Row 2  y=186, h=60 — Analysis cx=606 / NDA cx=800
+  Row 3  y=324, h=60 — NegFollowup cx=100 / Onboarding cx=680 / Loop cx=852
+  H-routing lane y=278 (safe gap between row2 bottom 246 and row3 top 324)
+  No text or boxes overlap this lane.
+-->
+<svg class="flow-svg" viewBox="0 0 960 460" xmlns="http://www.w3.org/2000/svg" width="100%">
+<defs>
+  <marker id="m0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <path d="M1 1L9 5L1 9" fill="none" stroke="#484540" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <marker id="ma" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <path d="M1 1L9 5L1 9" fill="none" stroke="#E8623A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <marker id="mg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <path d="M1 1L9 5L1 9" fill="none" stroke="#4CAF82" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- ── ROW 1: Main pipeline ────────────────────────────────────────── -->
+<!-- Node box helper: x = cx-57 (width 114) -->
+
+<!-- 01 Form -->
+<rect x="21"  y="48" width="114" height="60" rx="2.5" fill="#1A1916" stroke="#303028" stroke-width=".5"/>
+<text x="78"  y="72"  text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(232,98,58,.6)" letter-spacing=".1em">STEP 01</text>
+<text x="78"  y="87"  text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Form</text>
+<text x="78"  y="101" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Submission</text>
+<text x="78"  y="122" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,234,224,.22)">Typeform · webhook</text>
+
+<!-- 02 Research -->
+<rect x="153" y="48" width="114" height="60" rx="2.5" fill="#1A1916" stroke="#303028" stroke-width=".5"/>
+<text x="210" y="72"  text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(232,98,58,.6)" letter-spacing=".1em">STEP 02</text>
+<text x="210" y="87"  text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Deep Web</text>
+<text x="210" y="101" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Research</text>
+<text x="210" y="122" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,234,224,.22)">profile · socials · news</text>
+
+<!-- 03 First Email (accent highlight) -->
+<rect x="285" y="48" width="114" height="60" rx="2.5" fill="#1e1208" stroke="#E8623A" stroke-width=".8"/>
+<text x="342" y="72"  text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(232,98,58,.95)" letter-spacing=".1em">STEP 03</text>
+<text x="342" y="87"  text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">First Email</text>
+<text x="342" y="101" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#E8623A">within 10 seconds</text>
+<text x="342" y="122" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,234,224,.22)">AI-written · hyper-personal</text>
+
+<!-- 04 Pitch Deck -->
+<rect x="417" y="48" width="114" height="60" rx="2.5" fill="#1A1916" stroke="#303028" stroke-width=".5"/>
+<text x="474" y="72"  text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(232,98,58,.6)" letter-spacing=".1em">STEP 04</text>
+<text x="474" y="87"  text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Custom Pitch</text>
+<text x="474" y="101" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Deck + Link</text>
+<text x="474" y="122" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,234,224,.22)">branded · AI-generated</text>
+
+<!-- 05 Discovery Call -->
+<rect x="549" y="48" width="114" height="60" rx="2.5" fill="#1A1916" stroke="#303028" stroke-width=".5"/>
+<text x="606" y="72"  text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(232,98,58,.6)" letter-spacing=".1em">STEP 05</text>
+<text x="606" y="87"  text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Discovery</text>
+<text x="606" y="101" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Call</text>
+<text x="606" y="122" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,234,224,.22)">Calendly · auto-booked</text>
+
+<!-- Row 1 arrows -->
+<line x1="135" y1="78" x2="151" y2="78" stroke="#484540" stroke-width=".8" marker-end="url(#m0)"/>
+<line x1="267" y1="78" x2="283" y2="78" stroke="#E8623A" stroke-width=".8" opacity=".5" marker-end="url(#ma)"/>
+<line x1="399" y1="78" x2="415" y2="78" stroke="#484540" stroke-width=".8" marker-end="url(#m0)"/>
+<line x1="531" y1="78" x2="547" y2="78" stroke="#484540" stroke-width=".8" marker-end="url(#m0)"/>
+
+<!-- Call → Analysis (drop down) -->
+<line x1="606" y1="108" x2="606" y2="184" stroke="#484540" stroke-width=".8" marker-end="url(#m0)"/>
+
+<!-- ── ROW 2 ─────────────────────────────────────────────────────── -->
+
+<!-- 06 AI Analysis (green border, centred under Call) -->
+<rect x="526" y="186" width="160" height="60" rx="2.5" fill="#111b15" stroke="#4CAF82" stroke-width=".8"/>
+<text x="606" y="211" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(76,175,130,.9)" letter-spacing=".1em">STEP 06</text>
+<text x="606" y="226" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Post-Call AI</text>
+<text x="606" y="240" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Analysis</text>
+<text x="606" y="260" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,234,224,.22)">transcript · LLM scoring</text>
+
+<!-- Analysis → NDA (positive) -->
+<line x1="686" y1="216" x2="724" y2="216" stroke="#4CAF82" stroke-width=".8" opacity=".7" marker-end="url(#mg)"/>
+<text x="705" y="209" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(76,175,130,.7)">positive</text>
+
+<!-- 07a NDA Sent -->
+<rect x="724" y="186" width="144" height="60" rx="2.5" fill="#111b15" stroke="#4CAF82" stroke-width=".8"/>
+<text x="796" y="211" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(76,175,130,.9)" letter-spacing=".1em">STEP 07a</text>
+<text x="796" y="226" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">NDA Sent</text>
+<text x="796" y="240" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="rgba(76,175,130,.75)">positive outcome</text>
+<text x="796" y="260" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,234,224,.22)">DocuSign · auto-sent</text>
+
+<!-- ── ROUTING LANE y=278 ──────────────────────────────────────── -->
+<!-- Analysis → negative: down to lane, left across, down to row3 -->
+<path d="M606,246 L606,278 L100,278 L100,322" fill="none" stroke="#E8623A" stroke-width=".75" stroke-dasharray="4 3" opacity=".55" marker-end="url(#ma)"/>
+<text x="350" y="269" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(232,98,58,.6)">negative outcome</text>
+
+<!-- NDA → split stub down to lane -->
+<line x1="796" y1="246" x2="796" y2="278" stroke="#484540" stroke-width=".7" opacity=".5"/>
+<!-- Signed branch: left to onboarding cx=680 -->
+<path d="M796,278 L680,278 L680,322" fill="none" stroke="#4CAF82" stroke-width=".75" opacity=".65" marker-end="url(#mg)"/>
+<text x="736" y="269" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(76,175,130,.65)">NDA signed</text>
+<!-- Not signed: right to loop cx=868 -->
+<path d="M796,278 L868,278 L868,322" fill="none" stroke="#E8623A" stroke-width=".75" stroke-dasharray="4 3" opacity=".5" marker-end="url(#ma)"/>
+<text x="848" y="269" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(232,98,58,.55)">not signed</text>
+
+<!-- ── ROW 3 ─────────────────────────────────────────────────────── -->
+
+<!-- 07b Custom Follow-through (negative) -->
+<rect x="43"  y="322" width="114" height="60" rx="2.5" fill="#1e1208" stroke="#E8623A" stroke-width=".5"/>
+<text x="100" y="347" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(232,98,58,.9)" letter-spacing=".1em">STEP 07b</text>
+<text x="100" y="362" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Custom</text>
+<text x="100" y="376" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Follow-through</text>
+<text x="100" y="396" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,234,224,.22)">AI-written · personalised</text>
+
+<!-- 08a Onboarding Pack (signed) -->
+<rect x="623" y="322" width="114" height="60" rx="2.5" fill="#111b15" stroke="#4CAF82" stroke-width=".8"/>
+<text x="680" y="347" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(76,175,130,.9)" letter-spacing=".1em">STEP 08a</text>
+<text x="680" y="362" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Onboarding</text>
+<text x="680" y="376" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Pack Sent</text>
+<text x="680" y="396" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,234,224,.22)">NDA signed ✓</text>
+
+<!-- 08b Follow-up loop (not signed) -->
+<rect x="811" y="322" width="114" height="60" rx="2.5" fill="#1e1208" stroke="#E8623A" stroke-width=".5" stroke-dasharray="4 3"/>
+<text x="868" y="347" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(232,98,58,.9)" letter-spacing=".1em">STEP 08b</text>
+<text x="868" y="362" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12.5" font-weight="500" fill="#F0EAE0">Follow-up</text>
+<text x="868" y="376" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#F0EAE0">every 2 days</text>
+<text x="868" y="396" text-anchor="middle" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(240,234,224,.22)">until signed or closed</text>
+
+<!-- Legend -->
+<line x1="20"  y1="435" x2="40"  y2="435" stroke="#4CAF82" stroke-width="1.2"/>
+<text x="46"  y="439" font-family="'DM Mono',monospace" font-size="9" fill="rgba(240,234,224,.32)">Positive path</text>
+<line x1="148" y1="435" x2="168" y2="435" stroke="#E8623A" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="174" y="439" font-family="'DM Mono',monospace" font-size="9" fill="rgba(240,234,224,.32)">Negative / follow-up path</text>
+<line x1="346" y1="435" x2="366" y2="435" stroke="#484540" stroke-width="1.2"/>
+<text x="372" y="439" font-family="'DM Mono',monospace" font-size="9" fill="rgba(240,234,224,.32)">Standard pipeline</text>
+</svg>
+    </div>
+  </div>
+
+  <!-- Research callout -->
+  <div class="wrap">
+    <div class="research-note">
+      <div class="rn-step">Step 02</div>
+      <div>
+        <div class="rn-title">Deep research — built around the person, not just the company</div>
+        <div class="rn-body">Before a single word of outreach is written, the system pulls and synthesises: LinkedIn profile and recent activity, company news and funding history, personal social media posts and interests, public interviews and speaking engagements, recent press coverage, and professional history. Every piece of this feeds directly into the email copy and pitch deck — so the outreach feels like it came from someone who spent an afternoon preparing, not a tool that spent ten seconds.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ METRICS ═══════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="s-label"><span>04</span> Results</div>
+    <h2 class="s-title">Numbers that<br><em>speak clearly</em></h2>
+    <div class="met-grid">
+      <div class="met-cell">
+        <div class="met-n"><span class="a">−97</span>%</div>
+        <div class="met-d">Response time</div>
+        <div class="met-tag dn">6 hrs → 10 seconds</div>
+      </div>
+      <div class="met-cell">
+        <div class="met-n"><span class="a">+42</span>%</div>
+        <div class="met-d">Lead-to-meeting rate</div>
+        <div class="met-tag up">personalisation at scale</div>
+      </div>
+      <div class="met-cell">
+        <div class="met-n"><span class="a">−90</span>%</div>
+        <div class="met-d">Manual sales effort</div>
+        <div class="met-tag dn">per-lead work eliminated</div>
+      </div>
+      <div class="met-cell">
+        <div class="met-n"><span class="a">3×<sup style="font-size:.5em;vertical-align:super;">+</sup></span></div>
+        <div class="met-d">Pipeline capacity</div>
+        <div class="met-tag up">same team, tripled volume</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CRM ════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="s-label"><span>05</span> Custom CRM</div>
+    <h2 class="s-title">Built to track<br><em>every move</em></h2>
+    <div class="crm-grid">
+
+      <div>
+        <div class="crm-body">
+          <p>The automation is only half the system. Without visibility there's no accountability — so a purpose-built CRM was designed and deployed alongside the funnel, tightly integrated with every automated stage.</p>
+          <p>Every lead enters the CRM the moment the form fires. Every pipeline action — email sent, deck generated, call booked, NDA dispatched, follow-up triggered — writes back to the lead record automatically. Manual overrides by team members persist without disrupting automation state. Nothing gets lost between the two.</p>
+          <p>The result is a single source of truth with multiple views, role-based access control, a live activity feed, task assignments, and completion gates — all in one place.</p>
+        </div>
+        <div class="crm-feats">
+          <div class="crm-feat">
+            <span class="feat-tag">OVERVIEW</span>
+            <div class="feat-txt"><strong>Pipeline dashboard.</strong> Top-level stats — total leads, call rate, active NDAs, deal velocity, and conversion at each stage — updated live as the automation runs. Visible at a glance from any access level.</div>
+          </div>
+          <div class="crm-feat">
+            <span class="feat-tag">ACCESS</span>
+            <div class="feat-txt"><strong>Role-based access levels.</strong> Admins have full control — reassign, delete, configure. Sales reps see only their leads. Viewers get read-only access to reports and pipeline status. Each role sees a tailored interface.</div>
+          </div>
+          <div class="crm-feat">
+            <span class="feat-tag">LIVE</span>
+            <div class="feat-txt"><strong>Real-time updates feed.</strong> A live activity stream surfaces every automation action and manual edit — with timestamps, actor attribution, and the exact trigger. Nothing happens silently.</div>
+          </div>
+          <div class="crm-feat">
+            <span class="feat-tag">ASSIGN</span>
+            <div class="feat-txt"><strong>Lead assignment and load balancing.</strong> Leads are distributed automatically by round-robin or manually reassigned by admins. Each rep's active pipeline load is visible from the overview, preventing bottlenecks.</div>
+          </div>
+          <div class="crm-feat">
+            <span class="feat-tag">TASKS</span>
+            <div class="feat-txt"><strong>Per-lead task completions.</strong> Checklist-based task tracking inside each lead record. Human-in-the-loop actions — reviewing a transcript, approving an NDA draft — are gated until marked complete, blocking automation from advancing prematurely.</div>
+          </div>
+          <div class="crm-feat">
+            <span class="feat-tag">SORT</span>
+            <div class="feat-txt"><strong>Multi-field filtering and sorting.</strong> Filter by stage, rep, outcome, date range, deal size, or NDA status. Sort any column ascending or descending. Switch between Kanban board and sortable lead list view in one click.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CRM MOCKUP ── -->
+      <div class="mock">
+        <div class="mock-top">
+          <div class="mock-ttl"><div class="live-dot"></div>Pipeline · FASSET CRM</div>
+          <div class="mock-role">Admin view</div>
+        </div>
+
+        <!-- Stats strip -->
+        <div class="stats-row">
+          <div class="s-stat"><div class="s-stat-n">24</div><div class="s-stat-l">Total leads</div></div>
+          <div class="s-stat"><div class="s-stat-n" style="color:var(--acc)">68%</div><div class="s-stat-l">Call rate</div></div>
+          <div class="s-stat"><div class="s-stat-n" style="color:var(--grn)">7</div><div class="s-stat-l">NDAs active</div></div>
+          <div class="s-stat"><div class="s-stat-n" style="color:var(--amb)">3.1×</div><div class="s-stat-l">Capacity</div></div>
+        </div>
+
+        <!-- Access pills -->
+        <div class="access-row">
+          <span class="ar-lbl">View as</span>
+          <span class="ap admin">Admin</span>
+          <span class="ap rep">Sales rep</span>
+          <span class="ap view">Viewer</span>
+        </div>
+
+        <div class="mock-body">
+          <!-- Kanban -->
+          <div class="kb-area">
+            <div class="kb-scroll">
+
+              <!-- New -->
+              <div class="k-col">
+                <div class="k-col-h" style="color:rgba(240,234,224,.4)">New<span class="k-n">4</span></div>
+                <div class="k-card">
+                  <div class="k-card-top"><div class="k-name">Ravi Singh</div><div class="k-av r">AQ</div></div>
+                  <div class="k-meta">2 min ago · auto</div>
+                  <div class="k-tags"><span class="kt hot">Hot</span></div>
+                  <div class="k-tasks"><div class="k-check done">✓</div><span class="k-task-lbl">Research done</span></div>
+                </div>
+                <div class="k-card">
+                  <div class="k-card-top"><div class="k-name">Lena Müller</div><div class="k-av g">SM</div></div>
+                  <div class="k-meta">18 min ago · auto</div>
+                  <div class="k-tags"><span class="kt warm">Warm</span></div>
+                  <div class="k-tasks"><div class="k-check todo"></div><span class="k-task-lbl">Email pending</span></div>
+                </div>
+              </div>
+
+              <!-- Contacted -->
+              <div class="k-col">
+                <div class="k-col-h" style="color:rgba(232,98,58,.7)">Contacted<span class="k-n">3</span></div>
+                <div class="k-card">
+                  <div class="k-card-top"><div class="k-name">Tariq Al-R.</div><div class="k-av r">AQ</div></div>
+                  <div class="k-meta">Deck sent · 1h</div>
+                  <div class="k-tags"><span class="kt hot">Hot</span></div>
+                  <div class="k-tasks"><div class="k-check done">✓</div><div class="k-check done">✓</div><div class="k-check todo"></div></div>
+                </div>
+                <div class="k-card">
+                  <div class="k-card-top"><div class="k-name">Priya Menon</div><div class="k-av a">FK</div></div>
+                  <div class="k-meta">Call booked · yesterday</div>
+                  <div class="k-tags"><span class="kt warm">Warm</span></div>
+                </div>
+              </div>
+
+              <!-- Post-call -->
+              <div class="k-col">
+                <div class="k-col-h" style="color:rgba(212,168,75,.8)">Post-call<span class="k-n">2</span></div>
+                <div class="k-card">
+                  <div class="k-card-top"><div class="k-name">James Okafor</div><div class="k-av g">SM</div></div>
+                  <div class="k-meta">NDA sent · 2d</div>
+                  <div class="k-tags"><span class="kt nda">NDA out</span></div>
+                  <div class="k-tasks"><div class="k-check done">✓</div><span class="k-task-lbl">All tasks done</span></div>
+                </div>
+                <div class="k-card">
+                  <div class="k-card-top"><div class="k-name">Fatima Al-A.</div><div class="k-av r">AQ</div></div>
+                  <div class="k-meta">Follow-up #2</div>
+                  <div class="k-tags"><span class="kt cold">Cold</span></div>
+                </div>
+              </div>
+
+              <!-- Signed -->
+              <div class="k-col">
+                <div class="k-col-h" style="color:rgba(76,175,130,.8)">Signed<span class="k-n">1</span></div>
+                <div class="k-card">
+                  <div class="k-card-top"><div class="k-name">Chen Wei</div><div class="k-av g">SM</div></div>
+                  <div class="k-meta">Onboarded</div>
+                  <div class="k-tags"><span class="kt nda">NDA ✓</span></div>
+                  <div class="k-tasks"><div class="k-check done">✓</div><span class="k-task-lbl">Complete</span></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Live Feed -->
+          <div class="feed">
+            <div class="feed-hd"><div class="feed-ld"></div>Live</div>
+            <div class="f-item"><div class="f-act"><strong>Auto:</strong> Email sent — Ravi Singh</div><div class="f-time">now</div></div>
+            <div class="f-item"><div class="f-act"><strong>Auto:</strong> Pitch deck generated</div><div class="f-time">4 min</div></div>
+            <div class="f-item"><div class="f-act">AQ assigned Tariq to self</div><div class="f-time">1h ago</div></div>
+            <div class="f-item"><div class="f-act"><strong>Auto:</strong> NDA sent — James Okafor</div><div class="f-time">2d ago</div></div>
+            <div class="f-item"><div class="f-act"><strong>Auto:</strong> Call scored positive</div><div class="f-time">2d ago</div></div>
+            <div class="f-item"><div class="f-act">SM moved Chen Wei → Signed</div><div class="f-time">3d ago</div></div>
+            <div class="f-item"><div class="f-act"><strong>Auto:</strong> Onboarding pack sent</div><div class="f-time">3d ago</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STACK ══════════════════════════════════════════════════════════ -->
+<section style="border-bottom:none">
+  <div class="wrap">
+    <div class="s-label"><span>06</span> Technical Stack</div>
+    <h2 class="s-title">Built on<br><em>what works</em></h2>
+    <p style="color:var(--ink-dim);max-width:520px;font-size:16px;">Tools chosen for reliability, full observability, and the ability to extend — with n8n as the orchestration backbone tying every node together.</p>
+    <div class="stack-grid">
+      <span class="s-tag">n8n</span>
+      <span class="s-tag">OpenAI GPT-4o</span>
+      <span class="s-tag">Airtable</span>
+      <span class="s-tag">Typeform</span>
+      <span class="s-tag">Calendly</span>
+      <span class="s-tag">Google Slides API</span>
+      <span class="s-tag">DocuSign</span>
+      <span class="s-tag">Gmail SMTP</span>
+      <span class="s-tag">Webhook Triggers</span>
+      <span class="s-tag">Perplexity AI</span>
+      <span class="s-tag">Whisper (transcription)</span>
+      <span class="s-tag">Custom Prompt Engineering</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═════════════════════════════════════════════════════════ -->
+<div class="wrap">
+  <div class="foot">
+    <span class="foot-name">Abdullah Mustafa</span>
+    <span class="foot-copy">Portfolio Case Study · FASSET · 2025</span>
+  </div>
+</div>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'none';
+      }
+    });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.story-cell').forEach((el, i) => {
+    el.style.cssText = `opacity:0;transform:translateY(14px);transition:opacity .6s ${i*.12}s ease,transform .6s ${i*.12}s ease`;
+    io.observe(el);
+  });
+  document.querySelectorAll('.met-cell').forEach((el, i) => {
+    el.style.cssText = `opacity:0;transform:translateY(16px);transition:opacity .6s ${i*.09}s ease,transform .6s ${i*.09}s ease`;
+    io.observe(el);
+  });
+  document.querySelectorAll('.crm-feat').forEach((el, i) => {
+    el.style.cssText = `opacity:0;transform:translateX(-10px);transition:opacity .55s ${i*.07}s ease,transform .55s ${i*.07}s ease`;
+    io.observe(el);
+  });
+  document.querySelectorAll('.callout').forEach((el, i) => {
+    el.style.cssText = `opacity:0;transform:translateY(12px);transition:opacity .6s ${i*.12}s ease,transform .6s ${i*.12}s ease`;
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
